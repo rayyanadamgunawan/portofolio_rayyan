@@ -22,7 +22,7 @@ const AnimatedRoutes = () => {
   const location = useLocation();
   
   return (
-    <AnimatePresence mode="wait">
+    <AnimatePresence mode="wait" onExitComplete={() => window.scrollTo(0, 0)}>
       <Routes location={location} key={location.pathname}>
         <Route path="/" element={<PageTransition><Home /></PageTransition>} />
         <Route path="/about" element={<PageTransition><About /></PageTransition>} />
@@ -37,19 +37,10 @@ const AnimatedRoutes = () => {
   );
 };
 
-const ScrollToTop = () => {
-  const { pathname } = useLocation();
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [pathname]);
-  return null;
-};
-
 function App() {
   return (
     <ThemeProvider>
       <Router>
-        <ScrollToTop />
         <CustomCursor />
         <div className="app-container">
           <Navbar />
