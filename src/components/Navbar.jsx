@@ -1,11 +1,13 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { LangContext } from '../contexts/LangContext';
-import { Menu, X, Globe } from 'lucide-react';
+import { ThemeContext } from '../contexts/ThemeContext';
+import { Menu, X, Globe, Sun, Moon } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const Navbar = () => {
   const { lang, toggleLang, t } = useContext(LangContext);
+  const { theme, toggleTheme } = useContext(ThemeContext);
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -35,6 +37,11 @@ const Navbar = () => {
   return (
     <>
       <nav className={`top-navbar ${scrolled ? 'scrolled' : ''}`}>
+        {/* Hamburger di KIRI */}
+        <button className="mobile-menu-btn" onClick={() => setMobileOpen(!mobileOpen)}>
+          {mobileOpen ? <X size={28} /> : <Menu size={28} />}
+        </button>
+
         <NavLink to="/" className="nav-brand">
           Rayyan Adam Gunawan<span style={{color: 'var(--accent-secondary)'}}>.</span>
         </NavLink>
@@ -49,14 +56,13 @@ const Navbar = () => {
               {item.label}
             </NavLink>
           ))}
-          <button className="lang-toggle" onClick={toggleLang}>
+          <button className="lang-toggle" onClick={toggleLang} title="Toggle Language">
             {lang === 'id' ? 'ID' : 'EN'}
           </button>
+          <button className="lang-toggle" onClick={toggleTheme} title="Toggle Theme" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+          </button>
         </div>
-
-        <button className="mobile-menu-btn" onClick={() => setMobileOpen(!mobileOpen)}>
-          {mobileOpen ? <X size={28} /> : <Menu size={28} />}
-        </button>
       </nav>
 
       {/* Mobile Menu Overlay */}
@@ -72,7 +78,7 @@ const Navbar = () => {
               top: '80px',
               left: 0,
               width: '100%',
-              background: 'rgba(5, 8, 24, 0.95)',
+              background: 'rgba(var(--bg-main-rgb), 0.95)',
               backdropFilter: 'blur(20px)',
               padding: '2rem',
               display: 'flex',
@@ -93,10 +99,15 @@ const Navbar = () => {
                 {item.label}
               </NavLink>
             ))}
-            <button className="lang-toggle" onClick={toggleLang} style={{ width: 'max-content' }}>
-              <Globe size={16} style={{display: 'inline', marginRight: '8px'}}/>
-              {lang === 'id' ? 'Switch to English' : 'Ganti ke Indonesia'}
-            </button>
+            <div style={{ display: 'flex', gap: '1rem', marginTop: '1rem' }}>
+              <button className="lang-toggle" onClick={toggleLang} style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Globe size={16} style={{marginRight: '8px'}}/>
+                {lang === 'id' ? 'English' : 'Indonesia'}
+              </button>
+              <button className="lang-toggle" onClick={toggleTheme} style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                {theme === 'dark' ? <><Sun size={16} style={{marginRight: '8px'}} /> Light</> : <><Moon size={16} style={{marginRight: '8px'}} /> Dark</>}
+              </button>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

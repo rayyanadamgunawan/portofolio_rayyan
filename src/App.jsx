@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
+import { ThemeProvider } from './contexts/ThemeContext';
 
 // Components
 import Navbar from './components/Navbar';
@@ -37,16 +38,18 @@ const AnimatedRoutes = () => {
 
 function App() {
   return (
-    <Router>
-      <CustomCursor />
-      <div className="app-container">
-        <Navbar />
-        
-        <main className="main-content">
-          <AnimatedRoutes />
-        </main>
-      </div>
-    </Router>
+    <ThemeProvider>
+      <Router>
+        <CustomCursor />
+        <div className="app-container">
+          <Navbar />
+          
+          <main className="main-content">
+            <AnimatedRoutes />
+          </main>
+        </div>
+      </Router>
+    </ThemeProvider>
   );
 }
 

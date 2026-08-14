@@ -52,16 +52,44 @@ const CustomCursor = () => {
   };
 
   return (
-    <motion.div
-      className="custom-cursor-solid"
-      variants={variants}
-      animate={isHovering ? 'hover' : 'default'}
-      transition={{ 
-        type: 'tween', 
-        ease: 'backOut', 
-        duration: 0.15 
-      }}
-    />
+    <>
+      {/* Background Interactive Glow */}
+      <motion.div
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '500px',
+          height: '500px',
+          borderRadius: '50%',
+          background: 'radial-gradient(circle, rgba(127, 82, 255, 0.04) 0%, rgba(97, 218, 251, 0.02) 40%, rgba(var(--bg-main-rgb), 0) 60%)',
+          filter: 'blur(70px)',
+          zIndex: 0, // Behind everything
+          pointerEvents: 'none',
+        }}
+        animate={{
+          x: mousePosition.x - 250,
+          y: mousePosition.y - 250,
+        }}
+        transition={{ 
+          type: 'tween', 
+          ease: 'easeOut', 
+          duration: 1.5 // Smooth, lagging effect
+        }}
+      />
+      
+      {/* Small Solid Cursor */}
+      <motion.div
+        className="custom-cursor-solid"
+        variants={variants}
+        animate={isHovering ? 'hover' : 'default'}
+        transition={{ 
+          type: 'tween', 
+          ease: 'backOut', 
+          duration: 0.15 
+        }}
+      />
+    </>
   );
 };
 
