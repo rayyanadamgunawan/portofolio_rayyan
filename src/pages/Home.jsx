@@ -135,13 +135,50 @@ const Home = () => {
       <div className="noise-overlay"></div>
 
       {/* ===== HERO ===== */}
-      <div className="hero-container">
-        <div className="hero-orb-container">
+      <div className="hero-container" style={{ position: 'relative', overflow: 'hidden' }}>
+        {/* Quantum Fluid Background */}
+        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, zIndex: -1, overflow: 'hidden' }}>
           <motion.div
-            className="hero-orb"
-            animate={{ left: `calc(${mousePos.x}vw)`, top: `calc(${mousePos.y}vh)` }}
-            style={{ y: yOrb }}
-            transition={{ type: 'tween', ease: 'easeOut', duration: 1.5 }}
+            style={{
+              position: 'absolute',
+              width: '60vw',
+              height: '60vw',
+              borderRadius: '50%',
+              background: 'radial-gradient(circle, var(--accent-color) 0%, transparent 60%)',
+              filter: 'blur(100px)',
+              opacity: 0.4,
+              left: '50%',
+              top: '50%',
+              x: '-50%',
+              y: '-50%',
+            }}
+            animate={{ 
+              x: `calc(-50% + ${(mousePos.x - 50) * 0.5}vw)`, 
+              y: `calc(-50% + ${(mousePos.y - 50) * 0.5}vh)`,
+              scale: [1, 1.1, 1]
+            }}
+            transition={{ type: 'tween', ease: 'easeOut', duration: 3, scale: { repeat: Infinity, duration: 8, ease: "easeInOut" } }}
+          />
+          <motion.div
+            style={{
+              position: 'absolute',
+              width: '45vw',
+              height: '45vw',
+              borderRadius: '50%',
+              background: 'radial-gradient(circle, var(--accent-secondary) 0%, transparent 60%)',
+              filter: 'blur(80px)',
+              opacity: 0.3,
+              left: '50%',
+              top: '50%',
+              x: '-50%',
+              y: '-50%',
+            }}
+            animate={{ 
+              x: `calc(-50% - ${(mousePos.x - 50) * 0.8}vw)`, 
+              y: `calc(-50% - ${(mousePos.y - 50) * 0.8}vh)`,
+              scale: [1, 1.2, 1]
+            }}
+            transition={{ type: 'tween', ease: 'easeOut', duration: 4, scale: { repeat: Infinity, duration: 10, ease: "easeInOut" } }}
           />
         </div>
 
@@ -150,13 +187,13 @@ const Home = () => {
           variants={containerVariants}
           initial="hidden"
           animate="visible"
-          style={{ y: yTitle }}
+          style={{ y: yTitle, position: 'relative', zIndex: 1 }}
         >
           <motion.div variants={itemVariants} className="hero-greeting">
             {lang === 'id' ? 'Halo, Saya Rayyan Adam Gunawan.' : 'Hello, I am Rayyan Adam Gunawan.'}
           </motion.div>
-          <motion.h1 variants={itemVariants} className="hero-title">
-            Web &amp; Mobile Developer
+          <motion.h1 variants={itemVariants} className="hero-title text-gradient-quantum" style={{ fontSize: 'clamp(3.5rem, 8vw, 6rem)' }}>
+            Fullstack & Mobile Developer
           </motion.h1>
           <motion.p variants={itemVariants} className="hero-desc">
             {t('description1')}
@@ -346,7 +383,7 @@ const Home = () => {
               <span style={{ fontSize: '2.5rem', lineHeight: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <skill.Icon size={40} color={skill.color} style={{ filter: `drop-shadow(0 0 8px ${skill.color})` }} />
               </span>
-              <span style={{ fontSize: '0.8rem', fontWeight: 700, color: 'rgba(255,255,255,0.8)', letterSpacing: '0.04em', textAlign: 'center' }}>
+              <span style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--text-main)', letterSpacing: '0.04em', textAlign: 'center' }}>
                 {skill.name}
               </span>
             </motion.div>

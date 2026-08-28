@@ -127,10 +127,10 @@ const Projects = () => {
                 {repo.description || t('noDescription')}
               </p>
 
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 'auto', borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '1.5rem' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 'auto', borderTop: '1px solid var(--border-color)', paddingTop: '1.5rem' }}>
                 <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>
                   {repo.language && (
-                    <span style={{ display: 'inline-block', marginRight: '8px', width: '10px', height: '10px', borderRadius: '50%', backgroundColor: 'var(--accent-primary)', verticalAlign: 'middle' }}></span>
+                    <span style={{ display: 'inline-block', marginRight: '8px', width: '10px', height: '10px', borderRadius: '50%', backgroundColor: 'var(--accent-color)', verticalAlign: 'middle' }}></span>
                   )}
                   {repo.language || 'Code'}
                 </span>

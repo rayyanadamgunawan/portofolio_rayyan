@@ -45,10 +45,10 @@ const CircularProgress = ({ level, color, size = 160 }) => {
         transition={{ duration: 1.4, ease: 'easeOut' }}
         style={{ transformOrigin: '65px 65px', rotate: '-90deg', filter: `drop-shadow(0 0 10px ${color})` }}
       />
-      <text x="65" y="58" textAnchor="middle" fill="white" fontSize="24" fontWeight="800" fontFamily="Montserrat, sans-serif">
+      <text x="65" y="58" textAnchor="middle" fill="var(--text-main)" fontSize="24" fontWeight="800" fontFamily="Montserrat, sans-serif">
         {level}%
       </text>
-      <text x="65" y="76" textAnchor="middle" fill="rgba(255,255,255,0.45)" fontSize="9" fontFamily="Inter, sans-serif" letterSpacing="2">
+      <text x="65" y="76" textAnchor="middle" fill="var(--text-muted)" fontSize="9" fontFamily="Inter, sans-serif" letterSpacing="2">
         MASTERY
       </text>
     </svg>

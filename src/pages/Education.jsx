@@ -114,7 +114,7 @@ const Education = () => {
                 
                 <div className="flex flex-wrap gap-3 mt-3 mb-4">
                   <span className="timeline-year">{edu.period}</span>
-                  <span className="timeline-year" style={{ borderColor: edu.status === 'Aktif' || edu.status === 'Active' ? 'var(--accent-secondary)' : 'rgba(255,255,255,0.1)' }}>
+                  <span className="timeline-year" style={{ borderColor: edu.status === 'Aktif' || edu.status === 'Active' ? 'var(--accent-secondary)' : 'var(--border-color)' }}>
                     {edu.status}
                   </span>
                   {edu.gpa && (
