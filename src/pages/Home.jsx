@@ -1,9 +1,11 @@
-import React, { useContext, useRef } from 'react';
+import React, { useContext, useRef, useMemo } from 'react';
 import { motion, useInView, useScroll, useTransform } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { FaCode, FaLaptopCode, FaRocket } from 'react-icons/fa';
-import { SiJavascript, SiReact, SiTailwindcss, SiNodedotjs, SiPython } from 'react-icons/si';
+import { SiJavascript, SiReact, SiTailwindcss, SiNodedotjs, SiPython, SiLaravel, SiFirebase, SiFlutter } from 'react-icons/si';
 import { LangContext } from '../contexts/LangContext';
+import { manualProjects } from './Projects';
+import { skills } from './Skills';
 
 // Komponen FadeIn untuk animasi muncul perlahan saat di-scroll
 const FadeInSection = ({ children, style, delay = 0 }) => {
@@ -52,49 +54,46 @@ const FloatingTag = ({ text, top, left, right, delay, icon }) => (
   </motion.div>
 );
 
-const featuredProjects = [
-  {
-    title: 'Enterprise Validation',
-    desc: 'Odoo Web System with XML customization.',
-    icon: '🖥️',
-    color: '#00E5FF',
-    link: '/projects',
-    tech: ['Odoo', 'Python', 'XML']
-  },
-  {
-    title: 'DSS Dashboard',
-    desc: 'Multi-criteria decision support calculation engine.',
-    icon: '📊',
-    color: '#7F52FF',
-    link: '/projects',
-    tech: ['React', 'Firebase', 'Tailwind']
-  },
-  {
-    title: 'EduCounsel',
-    desc: 'E-Counseling portal with strict RBAC.',
-    icon: '🛡️',
-    color: '#F43F5E',
-    link: '/projects',
-    tech: ['Laravel', 'MySQL']
-  }
-];
+const featuredProjects = manualProjects.slice(0, 3).map(p => ({
+  titleId: p.title,
+  titleEn: p.titleEn,
+  descId: p.description,
+  descEn: p.descriptionEn,
+  icon: p.icon,
+  color: p.id === 1 ? '#7F52FF' : p.id === 2 ? '#00E5FF' : '#F43F5E',
+  link: '/projects',
+  tech: p.tech.slice(0, 3) // Hanya ambil 3 tekno pertama agar tidak terlalu penuh
+}));
 
-const featuredSkills = [
-  { name: 'JavaScript', Icon: SiJavascript, color: '#F7DF1E' },
-  { name: 'React', Icon: SiReact, color: '#61DAFB' },
-  { name: 'Tailwind', Icon: SiTailwindcss, color: '#06B6D4' },
-  { name: 'Node.js', Icon: SiNodedotjs, color: '#339933' },
-  { name: 'Python', Icon: SiPython, color: '#3776AB' },
-];
+const featuredSkills = skills;
 
 const Home = () => {
   const navigate = useNavigate();
   const { lang } = useContext(LangContext);
+  
+  const { scrollYProgress, scrollY } = useScroll();
+  
+  // Teks Hero menjauh dan menghilang
+  const textY = useTransform(scrollY, [0, 800], [0, -200]);
+  const textScale = useTransform(scrollY, [0, 800], [1, 0.8]);
+  const textOpacity = useTransform(scrollY, [0, 600], [1, 0]);
 
-  const { scrollY } = useScroll();
-  const textY = useTransform(scrollY, [0, 1000], [0, -150]);
-  const planetY = useTransform(scrollY, [0, 1000], [0, 300]);
-  const tagsY = useTransform(scrollY, [0, 1000], [0, 150]);
+  // Planet Bumi (Earth) - Zoom out dan geser ke KANAN, tetap terlihat
+  const earthScale = useTransform(scrollY, [0, 800], [1, 0.2]);
+  const earthX = useTransform(scrollY, [0, 800], ["-50%", "30%"]);
+  const earthY = useTransform(scrollY, [0, 800], ["60vh", "10vh"]);
+  const earthOpacity = useTransform(scrollY, [0, 800], [1, 0.6]);
+  
+  // Bulan (Moon) - Muncul dari KIRI ke TENGAH, lalu Zoom out menetap di KIRI atas
+  const moonScale = useTransform(scrollY, [400, 1200, 2000], [0.1, 1, 0.15]);
+  const moonX = useTransform(scrollY, [400, 1200, 2000], ["-150%", "-50%", "-130%"]);
+  const moonY = useTransform(scrollY, [400, 1200, 2000], ["100vh", "30vh", "-10vh"]);
+  const moonOpacity = useTransform(scrollY, [400, 1000, 1600, 2000], [0, 1, 1, 0.7]);
+
+  // Matahari (Sun) - Muncul terakhir di CTA
+  const sunScale = useTransform(scrollY, [1600, 2500], [0.5, 1]);
+  const sunY = useTransform(scrollY, [1600, 2500], ["100vh", "40vh"]);
+  const sunOpacity = useTransform(scrollY, [1800, 2200], [0, 1]);
 
   const sectionStyle = {
     padding: '8rem 5%',
@@ -106,6 +105,76 @@ const Home = () => {
   return (
     <div style={{ position: 'relative', width: '100%', overflowX: 'hidden', minHeight: '100vh', background: '#000' }}>
       
+      {/* ===== FIXED 3D SOLAR SYSTEM BACKGROUND ===== */}
+      <div style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', pointerEvents: 'none', zIndex: 0 }}>
+
+        {/* Matahari (Sun) - Paling Belakang */}
+        <motion.div 
+          style={{
+            position: 'absolute', top: 0, left: '50%', x: '-50%', y: sunY,
+            scale: sunScale, opacity: sunOpacity,
+            width: '80vw', height: '80vw', maxWidth: '800px', maxHeight: '800px',
+            zIndex: 1
+          }} 
+        >
+          {/* Efek Solar Flare yang Berputar */}
+          <motion.div
+            animate={{ rotate: 360, scale: [1, 1.05, 1] }}
+            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+            style={{
+              position: 'absolute', inset: 0, borderRadius: '50%',
+              background: 'conic-gradient(from 0deg at 50% 50%, rgba(255, 150, 0, 0.2) 0deg, rgba(255, 60, 0, 0.8) 90deg, rgba(255, 200, 0, 0.2) 180deg, rgba(255, 60, 0, 0.8) 270deg, rgba(255, 150, 0, 0.2) 360deg)',
+              filter: 'blur(20px)',
+            }}
+          />
+          {/* Inti Matahari */}
+          <div style={{
+            position: 'absolute', inset: 0, borderRadius: '50%',
+            background: 'radial-gradient(circle at 50% 50%, rgba(255, 220, 100, 1) 0%, rgba(255, 120, 0, 0.8) 20%, rgba(200, 30, 0, 0.3) 50%, transparent 70%)',
+            boxShadow: '0 -20px 150px rgba(255, 100, 0, 0.6), inset 0 20px 100px rgba(255, 200, 0, 0.8)',
+          }} />
+        </motion.div>
+
+        {/* Bulan (Moon) - Tengah */}
+        <motion.div style={{
+          position: 'absolute', top: 0, left: '50%', x: moonX, y: moonY,
+          scale: moonScale, opacity: moonOpacity,
+          width: '60vw', height: '60vw', maxWidth: '600px', maxHeight: '600px',
+          zIndex: 2,
+          display: 'flex', justifyContent: 'center', alignItems: 'center',
+          mixBlendMode: 'screen'
+        }}>
+          <img 
+            src="https://upload.wikimedia.org/wikipedia/commons/d/dd/Full_Moon_Luc_Viatour.jpg" 
+            alt="Moon"
+            style={{
+              width: '100%', height: '100%', objectFit: 'contain',
+              filter: 'contrast(1.2) brightness(0.9) drop-shadow(0 0 40px rgba(255,255,255,0.2))',
+              WebkitMaskImage: 'radial-gradient(closest-side, black 96%, transparent 100%)',
+              maskImage: 'radial-gradient(closest-side, black 96%, transparent 100%)'
+            }}
+          />
+        </motion.div>
+
+        {/* Planet Bumi (Earth) - Paling Depan */}
+        <motion.div style={{
+          position: 'absolute', top: 0, left: '50%', x: earthX, y: earthY,
+          scale: earthScale, opacity: earthOpacity,
+          width: '120vw', height: '120vw', maxWidth: '1000px', maxHeight: '1000px',
+          zIndex: 3,
+          display: 'flex', justifyContent: 'center', alignItems: 'center'
+        }}>
+          <img 
+            src="https://upload.wikimedia.org/wikipedia/commons/2/22/Earth_Western_Hemisphere_transparent_background.png" 
+            alt="Earth"
+            style={{
+              width: '110%', height: '110%', objectFit: 'contain',
+              filter: 'drop-shadow(0 0 80px rgba(127, 82, 255, 0.8))'
+            }}
+          />
+        </motion.div>
+      </div>
+
       {/* ===== HERO SECTION (MOTO CARD STYLE) ===== */}
       <section style={{ 
         position: 'relative', 
@@ -115,13 +184,14 @@ const Home = () => {
         flexDirection: 'column',
         alignItems: 'center', 
         justifyContent: 'flex-start',
-        paddingTop: '20vh',
-        overflow: 'hidden'
+        paddingTop: '20vh'
       }}>
         
         {/* Typografi Tengah Atas */}
         <motion.div style={{ 
           y: textY,
+          scale: textScale,
+          opacity: textOpacity,
           position: 'relative', 
           zIndex: 20, 
           display: 'flex', 
@@ -143,23 +213,37 @@ const Home = () => {
               fontWeight: 800,
               color: '#fff',
               letterSpacing: '-0.03em',
-              textTransform: 'uppercase'
+              textTransform: 'uppercase',
+              overflow: 'hidden'
             }}>
-              {lang === 'id' ? 'Infrastruktur' : 'Infrastructure'}<br/>
-              {lang === 'id' ? 'Untuk Masa Depan' : 'For How You Build'}
+              <motion.span 
+                initial={{ y: '100%' }} 
+                animate={{ y: 0 }} 
+                transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }} 
+                style={{ display: 'block' }}
+              >
+                {lang === 'id' ? 'Infrastruktur' : 'Infrastructure'}
+              </motion.span>
+              <motion.span 
+                initial={{ y: '100%' }} 
+                animate={{ y: 0 }} 
+                transition={{ duration: 1, delay: 0.3, ease: [0.16, 1, 0.3, 1] }} 
+                style={{ display: 'block' }}
+              >
+                {lang === 'id' ? 'Untuk Masa Depan' : 'For How You Build'}
+              </motion.span>
             </h1>
             
             <p style={{ 
-              fontSize: 'clamp(0.9rem, 1.5vw, 1.1rem)', 
-              color: '#888', 
-              maxWidth: '500px', 
+              color: '#aaa', fontSize: 'clamp(1rem, 1.5vw, 1.25rem)', 
+              maxWidth: '600px', lineHeight: 1.8,
+              fontWeight: 500,
               margin: '0 auto 2.5rem',
-              lineHeight: 1.6,
-              fontWeight: 500
+              textAlign: 'center'
             }}>
               {lang === 'id' 
-                ? 'Dari sistem enterprise hingga antarmuka modern. Rayyan membangun ekosistem digital yang tangguh.' 
-                : 'From enterprise systems to modern interfaces. Rayyan builds resilient digital ecosystems.'}
+                ? 'Dari sistem enterprise hingga antarmuka modern. Membantu membangun & siap berkolaborasi untuk ekosistem digital yang tangguh.' 
+                : 'From enterprise systems to modern interfaces. Helping build & ready to collaborate for resilient digital ecosystems.'}
             </p>
 
             {/* Pill Button ala Moto Card */}
@@ -184,43 +268,11 @@ const Home = () => {
           </motion.div>
         </motion.div>
 
-        {/* Planet Raksasa di Bawah */}
-        <motion.div style={{
-          y: planetY,
-          position: 'absolute',
-          bottom: '-60vw',
-          left: '50%',
-          transform: 'translateX(-50%)',
-          width: '150vw',
-          height: '150vw',
-          borderRadius: '50%',
-          background: 'radial-gradient(circle at 50% 0%, rgba(15, 23, 42, 1) 0%, rgba(0, 0, 0, 1) 40%)',
-          borderTop: '1px solid rgba(255, 255, 255, 0.15)',
-          boxShadow: 'inset 0 5px 30px rgba(255, 255, 255, 0.05), 0 -20px 100px rgba(127, 82, 255, 0.1)',
-          zIndex: 5
-        }}>
-          {/* Atmosfer planet (Glow luar) */}
-          <div style={{
-            position: 'absolute',
-            top: '-20px', left: '0', right: '0', height: '100px',
-            borderRadius: '50%',
-            background: 'linear-gradient(to top, rgba(127, 82, 255, 0.2), transparent)',
-            filter: 'blur(20px)', pointerEvents: 'none'
-          }}/>
-        </motion.div>
-
-        {/* Floating Tags (Badge ala Moto Card) */}
-        <motion.div style={{ y: tagsY, position: 'absolute', width: '100%', height: '100%', pointerEvents: 'none', zIndex: 10 }}>
-          <FloatingTag top="55%" left="15%" text="Odoo ERP" icon={<FaCode />} delay={0} />
-          <FloatingTag top="65%" right="20%" text="Laravel Systems" icon={<FaLaptopCode />} delay={1.5} />
-          <FloatingTag top="75%" left="25%" text="React / Flutter" icon={<FaRocket />} delay={0.8} />
-        </motion.div>
-
       </section>
 
       {/* ===== FEATURED PROJECTS ===== */}
       <FadeInSection style={{...sectionStyle, paddingTop: '10rem'}}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '4rem', flexWrap: 'wrap', gap: '1rem' }}>
+        <div style={{ position: 'relative', zIndex: 10, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '4rem', flexWrap: 'wrap', gap: '1rem' }}>
           <div>
             <h2 style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', fontFamily: 'var(--font-heading)', fontWeight: 800, color: '#fff' }}>
               {lang === 'id' ? 'Proyek Unggulan' : 'Featured Work'}
@@ -241,7 +293,7 @@ const Home = () => {
           </button>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 300px), 1fr))', gap: '1.5rem' }}>
+        <div style={{ position: 'relative', zIndex: 10, display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 300px), 1fr))', gap: '1.5rem' }}>
           {featuredProjects.map((proj, idx) => (
             <motion.div
               key={idx}
@@ -261,8 +313,8 @@ const Home = () => {
               <div style={{ position: 'absolute', top: 0, right: 0, width: '150px', height: '150px', background: `radial-gradient(circle, ${proj.color}15 0%, transparent 70%)`, filter: 'blur(20px)', opacity: 0.6 }} />
               
               <span style={{ fontSize: '2.5rem' }}>{proj.icon}</span>
-              <h3 style={{ color: '#fff', fontSize: '1.4rem', fontFamily: 'var(--font-heading)', zIndex: 1 }}>{proj.title}</h3>
-              <p style={{ color: '#888', fontSize: '0.95rem', lineHeight: 1.7, flex: 1, zIndex: 1 }}>{proj.desc}</p>
+              <h3 style={{ color: '#fff', fontSize: '1.4rem', fontFamily: 'var(--font-heading)', zIndex: 1 }}>{lang === 'id' ? proj.titleId : proj.titleEn}</h3>
+              <p style={{ color: '#888', fontSize: '0.95rem', lineHeight: 1.7, flex: 1, zIndex: 1 }}>{lang === 'id' ? proj.descId : proj.descEn}</p>
               
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', zIndex: 1 }}>
                 {proj.tech.map(tech => (
@@ -312,7 +364,7 @@ const Home = () => {
       </FadeInSection>
 
       {/* ===== CTA ===== */}
-      <FadeInSection style={{ ...sectionStyle, paddingBottom: '8rem' }} delay={0.2}>
+      <FadeInSection style={{ ...sectionStyle, paddingBottom: '8rem', position: 'relative' }} delay={0.2}>
         <div style={{
           padding: 'clamp(3rem, 6vw, 5rem) clamp(2rem, 4vw, 4rem)',
           background: 'rgba(255,255,255,0.01)',
@@ -320,7 +372,9 @@ const Home = () => {
           textAlign: 'center',
           borderRadius: '2rem',
           position: 'relative',
-          overflow: 'hidden'
+          overflow: 'hidden',
+          zIndex: 10,
+          backdropFilter: 'blur(10px)'
         }}>
           <h2 style={{
             fontSize: 'clamp(2rem, 5vw, 3.5rem)', fontFamily: 'var(--font-heading)', fontWeight: 800, marginBottom: '1.5rem',
@@ -337,7 +391,18 @@ const Home = () => {
             onClick={() => navigate('/contact')} 
             style={{ 
               background: '#fff', color: '#000', padding: '1rem 3rem', borderRadius: '100px', 
-              fontWeight: 600, fontSize: '1rem', border: 'none', position: 'relative', zIndex: 1 
+              fontWeight: 600, fontSize: '1rem', border: 'none', position: 'relative', zIndex: 1,
+              transition: 'all 0.3s'
+            }}
+            onMouseOver={(e) => {
+              e.currentTarget.style.background = '#FF8C00';
+              e.currentTarget.style.color = '#fff';
+              e.currentTarget.style.boxShadow = '0 10px 30px rgba(255, 140, 0, 0.4)';
+            }}
+            onMouseOut={(e) => {
+              e.currentTarget.style.background = '#fff';
+              e.currentTarget.style.color = '#000';
+              e.currentTarget.style.boxShadow = 'none';
             }}
             className="hover-target"
           >

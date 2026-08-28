@@ -3,7 +3,7 @@ import { LangContext } from '../contexts/LangContext';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaGithub, FaExternalLinkAlt, FaRocket, FaTimes, FaBookOpen, FaUserCircle, FaBriefcase, FaChartBar, FaUserMd, FaStore, FaMobileAlt, FaDesktop, FaQrcode } from 'react-icons/fa';
 
-const manualProjects = [
+export const manualProjects = [
   {
     id: 1,
     title: 'Bintang Baca',

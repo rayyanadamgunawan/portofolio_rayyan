@@ -21,19 +21,7 @@
   --navbar-height: 80px;
 }
 
-:root[data-theme="light"] {
-  /* Light Theme (Quantum Glass) */
-  --bg-main: #F8FAFC;
-  --bg-main-rgb: 248, 250, 252;
-  --surface: rgba(255, 255, 255, 0.6);
-  --surface-hover: rgba(255, 255, 255, 0.9);
-  --border-color: rgba(0, 0, 0, 0.05);
-  --border-highlight: rgba(107, 56, 251, 0.3);
-  --text-main: #0F172A;
-  --text-muted: #475569;
-  --accent-color: #6B38FB;
-  --accent-secondary: #08A6C9;
-}
+
 
 * {
   margin: 0;
@@ -603,6 +591,8 @@ h1, h2, h3, h4, h5, h6 {
   border-radius: 1rem;
   padding: 2rem;
   background: var(--surface);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border: 1px solid var(--border-color);
   display: flex;
   flex-direction: column;

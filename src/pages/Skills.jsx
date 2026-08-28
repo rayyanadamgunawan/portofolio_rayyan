@@ -7,7 +7,7 @@ import {
   SiGit, SiDocker, SiPostgresql, SiOdoo, SiFlutter, SiGitea
 } from 'react-icons/si';
 
-const skills = [
+export const skills = [
   { name: 'HTML', level: 90, color: '#E34F26', Icon: SiHtml5, desc: 'Semantic markup & structure' },
   { name: 'CSS', level: 85, color: '#1572B6', Icon: SiCss, desc: 'Layouts, animations & responsive design' },
   { name: 'React.js', level: 85, color: '#61DAFB', Icon: SiReact, desc: 'Component-based UI development' },

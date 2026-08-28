@@ -59,9 +59,6 @@ const Navbar = () => {
           <button className="lang-toggle" onClick={toggleLang} title="Toggle Language">
             {lang === 'id' ? 'ID' : 'EN'}
           </button>
-          <button className="lang-toggle" onClick={toggleTheme} title="Toggle Theme" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
-          </button>
         </div>
       </nav>
 
@@ -103,9 +100,6 @@ const Navbar = () => {
               <button className="lang-toggle" onClick={toggleLang} style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <Globe size={16} style={{marginRight: '8px'}}/>
                 {lang === 'id' ? 'English' : 'Indonesia'}
-              </button>
-              <button className="lang-toggle" onClick={toggleTheme} style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                {theme === 'dark' ? <><Sun size={16} style={{marginRight: '8px'}} /> Light</> : <><Moon size={16} style={{marginRight: '8px'}} /> Dark</>}
               </button>
             </div>
           </motion.div>

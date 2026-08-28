@@ -6,6 +6,7 @@ import { ThemeProvider } from './contexts/ThemeContext';
 // Components
 import Navbar from './components/Navbar';
 import PageTransition from './components/PageTransition';
+import Starfield from './components/Starfield';
 
 // Pages
 import Home from './pages/Home';
@@ -41,6 +42,7 @@ function App() {
     <ThemeProvider>
       <Router>
         <div className="app-container">
+          <Starfield />
           <Navbar />
           
           <main className="main-content">

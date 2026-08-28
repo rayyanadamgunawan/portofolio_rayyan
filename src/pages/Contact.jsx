@@ -1,11 +1,38 @@
-import React, { useContext } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import { LangContext } from '../contexts/LangContext';
 import { Send } from 'lucide-react';
 import { FaEnvelope, FaInstagram, FaLinkedin, FaGithub } from 'react-icons/fa';
 import { motion } from 'framer-motion';
+import emailjs from '@emailjs/browser';
 
 const Contact = () => {
   const { lang, t } = useContext(LangContext);
+  const form = useRef();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+
+  const sendEmail = (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    // TODO: Masukkan ID EmailJS di sini
+    const serviceId = 'service_c5xislu'; 
+    const templateId = 'template_1jyca3f'; 
+    const publicKey = 'LfTPQCDaL8aSGMJoK'; 
+
+    emailjs.sendForm(serviceId, templateId, form.current, {
+      publicKey: publicKey,
+    })
+      .then((result) => {
+          setIsSubmitting(false);
+          setIsSuccess(true);
+          form.current.reset();
+      }, (error) => {
+          setIsSubmitting(false);
+          alert(lang === 'id' ? 'Gagal mengirim pesan, coba lagi.' : 'Failed to send message, try again.');
+          console.error(error.text);
+      });
+  };
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -47,10 +74,10 @@ const Contact = () => {
       id: 'linkedin',
       title: lang === 'id' ? 'Mari Terhubung' : 'Let\'s Connect',
       desc: lang === 'id' ? 'Terhubung dengan saya secara profesional.' : 'Connect with me professionally.',
-      link: 'https://linkedin.com/in/rayyanadam',
+      link: '#',
       platform: 'LinkedIn',
       icon: <FaLinkedin size={40} />,
-      textClass: 'text-li',
+      textClass: 'text-linkedin',
     },
     {
       id: 'github',
@@ -131,25 +158,51 @@ const Contact = () => {
           <h3 style={{ fontSize: '1.5rem', marginBottom: '2rem', color: 'var(--text-main)' }}>
             {lang === 'id' ? 'Kirimkan Pesan Langsung' : 'Send a Direct Message'}
           </h3>
-          <form className="contact-form" onSubmit={(e) => e.preventDefault()}>
-            <div className="form-row" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', marginBottom: '1.5rem' }}>
-              <div className="form-group">
-                <label>{lang === 'id' ? 'Nama' : 'Name'}</label>
-                <input type="text" placeholder={lang === 'id' ? 'Masukkan nama Anda' : 'Enter your name'} required />
+          
+          {isSuccess ? (
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              style={{ 
+                padding: '2rem', 
+                borderRadius: '1rem', 
+                backgroundColor: 'rgba(0, 229, 255, 0.1)', 
+                border: '1px solid rgba(0, 229, 255, 0.3)',
+                textAlign: 'center',
+                color: '#00E5FF'
+              }}
+            >
+              <h4 style={{ fontSize: '1.25rem', marginBottom: '0.5rem' }}>{lang === 'id' ? 'Pesan Terkirim!' : 'Message Sent!'}</h4>
+              <p>{lang === 'id' ? 'Terima kasih, pesan Anda telah berhasil dikirim ke email Rayyan.' : 'Thank you, your message has been successfully sent to Rayyan\'s email.'}</p>
+              <button 
+                onClick={() => setIsSuccess(false)}
+                style={{ marginTop: '1.5rem', padding: '0.5rem 1.5rem', borderRadius: '100px', background: '#00E5FF', color: '#000', fontWeight: 'bold', cursor: 'pointer', border: 'none' }}
+              >
+                {lang === 'id' ? 'Kirim Lagi' : 'Send Another'}
+              </button>
+            </motion.div>
+          ) : (
+            <form ref={form} className="contact-form" onSubmit={sendEmail}>
+              <div className="form-row" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', marginBottom: '1.5rem' }}>
+                <div className="form-group">
+                  <label>{lang === 'id' ? 'Nama' : 'Name'}</label>
+                  <input type="text" name="name" placeholder={lang === 'id' ? 'Masukkan nama Anda' : 'Enter your name'} required />
+                </div>
+                <div className="form-group">
+                  <label>Email</label>
+                  <input type="email" name="email" placeholder={lang === 'id' ? 'Masukkan email Anda' : 'Enter your email'} required />
+                </div>
               </div>
-              <div className="form-group">
-                <label>Email</label>
-                <input type="email" placeholder={lang === 'id' ? 'Masukkan email Anda' : 'Enter your email'} required />
+              <div className="form-group" style={{ marginBottom: '2rem' }}>
+                <label>{lang === 'id' ? 'Pesan' : 'Message'}</label>
+                <textarea name="message" rows="5" placeholder={lang === 'id' ? 'Tulis pesan Anda di sini...' : 'Write your message here...'} required></textarea>
               </div>
-            </div>
-            <div className="form-group" style={{ marginBottom: '2rem' }}>
-              <label>{lang === 'id' ? 'Pesan' : 'Message'}</label>
-              <textarea rows="5" placeholder={lang === 'id' ? 'Tulis pesan Anda di sini...' : 'Write your message here...'} required></textarea>
-            </div>
-            <button type="submit" className="primary-btn hover-target">
-              {lang === 'id' ? 'Kirim Pesan' : 'Send Message'} <Send size={18} />
-            </button>
-          </form>
+              <button type="submit" disabled={isSubmitting} className="primary-btn hover-target" style={{ opacity: isSubmitting ? 0.7 : 1, cursor: isSubmitting ? 'not-allowed' : 'pointer' }}>
+                {isSubmitting ? (lang === 'id' ? 'Mengirim...' : 'Sending...') : (lang === 'id' ? 'Kirim Pesan' : 'Send Message')} 
+                {!isSubmitting && <Send size={18} />}
+              </button>
+            </form>
+          )}
         </div>
       </motion.div>
     </div>
