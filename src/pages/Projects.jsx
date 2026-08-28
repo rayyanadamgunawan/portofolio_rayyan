@@ -1,40 +1,53 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import { LangContext } from '../contexts/LangContext';
 import { motion } from 'framer-motion';
-import { FaGithub, FaStar, FaCodeBranch } from 'react-icons/fa';
+import { FaGithub, FaExternalLinkAlt, FaRocket } from 'react-icons/fa';
+
+const manualProjects = [
+  {
+    id: 1,
+    title: 'Portofolio Cosmic Aurora',
+    titleEn: 'Cosmic Aurora Portfolio',
+    description: 'Website portofolio interaktif dengan animasi WebGL/Framer Motion, mode Gelap/Terang, dan performa tinggi.',
+    descriptionEn: 'Interactive portfolio website with WebGL/Framer Motion animations, Dark/Light modes, and high performance.',
+    features: ['Smooth fluid background', 'Glassmorphism UI', 'Bilingual Support (ID/EN)'],
+    featuresEn: ['Smooth fluid background', 'Glassmorphism UI', 'Bilingual Support (ID/EN)'],
+    tech: ['React.js', 'Framer Motion', 'TailwindCSS', 'Vite'],
+    link: 'https://github.com/rayyanadamgunawan/portofolio_rayyan',
+    demo: 'https://rayyan-portfolio-82b30.web.app/'
+  },
+  {
+    id: 2,
+    title: 'Sistem Manajemen ERP (Odoo)',
+    titleEn: 'ERP Management System (Odoo)',
+    description: 'Pengembangan dan kustomisasi modul ERP berbasis Odoo untuk mengelola inventaris, penjualan, dan akuntansi bisnis secara terintegrasi.',
+    descriptionEn: 'Development and customization of Odoo-based ERP modules to manage business inventory, sales, and accounting in an integrated manner.',
+    features: ['Custom Module Creation', 'Automated Workflows', 'PostgreSQL Database Integration'],
+    featuresEn: ['Custom Module Creation', 'Automated Workflows', 'PostgreSQL Database Integration'],
+    tech: ['Odoo', 'Python', 'PostgreSQL', 'XML'],
+    link: 'https://github.com/rayyanadamgunawan'
+  },
+  {
+    id: 3,
+    title: 'Aplikasi Mobile Keuangan',
+    titleEn: 'Financial Mobile App',
+    description: 'Aplikasi pencatatan keuangan native berbasis Android untuk melacak pemasukan, pengeluaran, dan visualisasi grafik secara real-time.',
+    descriptionEn: 'Native Android financial tracking app for tracking income, expenses, and real-time chart visualizations.',
+    features: ['Real-time Sync', 'Authentication', 'Interactive Charts'],
+    featuresEn: ['Real-time Sync', 'Authentication', 'Interactive Charts'],
+    tech: ['Kotlin', 'Android Studio', 'Firebase', 'Material UI'],
+    link: 'https://github.com/rayyanadamgunawan'
+  }
+];
 
 const Projects = () => {
   const { lang, t } = useContext(LangContext);
-  const [repos, setRepos] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    const fetchRepos = async () => {
-      try {
-        const response = await fetch('https://api.github.com/users/rayyanadamgunawan/repos?sort=updated&per_page=9');
-        if (!response.ok) {
-          throw new Error('Failed to fetch repositories');
-        }
-        const data = await response.json();
-        // Exclude forks or specific repos if needed, but here we just take the recent 9
-        const filteredRepos = data.filter(repo => !repo.fork);
-        setRepos(filteredRepos);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchRepos();
-  }, []);
 
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: { staggerChildren: 0.1, delayChildren: 0.1 },
+      transition: { staggerChildren: 0.15, delayChildren: 0.1 },
     },
   };
 
@@ -47,16 +60,10 @@ const Projects = () => {
     },
   };
 
-  // Helper function to format date
-  const formatDate = (dateString) => {
-    const options = { year: 'numeric', month: 'short', day: 'numeric' };
-    return new Date(dateString).toLocaleDateString(lang === 'id' ? 'id-ID' : 'en-US', options);
-  };
-
   return (
     <div className="page-content projects-page">
       <motion.h1 
-        className="section-title"
+        className="section-title text-gradient-quantum"
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
@@ -69,86 +76,145 @@ const Projects = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.1 }}
       >
-        {t('projectsSubtitle')}
+        {lang === 'id' 
+          ? 'Kumpulan proyek terbaik yang pernah saya bangun.'
+          : 'A collection of my best crafted projects.'}
       </motion.p>
 
-      {loading && (
-        <div style={{ textAlign: 'center', marginTop: '4rem', color: 'var(--text-muted)' }}>
+      <motion.div 
+        className="projects-grid mt-12"
+        style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))',
+          gap: '2rem',
+          width: '100%',
+          padding: '1rem 0'
+        }}
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-50px" }}
+      >
+        {manualProjects.map((project) => (
           <motion.div 
-            animate={{ rotate: 360 }} 
-            transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
-            style={{ display: 'inline-block', marginBottom: '1rem' }}
+            key={project.id} 
+            className="project-card glass-panel hover-target"
+            variants={itemVariants}
+            whileHover={{ y: -8, transition: { duration: 0.2 } }}
+            style={{
+              padding: '2rem',
+              display: 'flex',
+              flexDirection: 'column',
+              height: '100%',
+              position: 'relative',
+              overflow: 'hidden'
+            }}
           >
-            <FaGithub size={40} />
-          </motion.div>
-          <p>{t('loading')}</p>
-        </div>
-      )}
+            <div style={{ position: 'absolute', top: '-15px', right: '-15px', opacity: 0.05, pointerEvents: 'none' }}>
+              <FaRocket size={120} />
+            </div>
 
-      {error && (
-        <div style={{ textAlign: 'center', marginTop: '4rem', color: '#ef4444' }}>
-          <p>{t('errorFetching')}</p>
-        </div>
-      )}
+            <h3 style={{ 
+              fontSize: '1.4rem', 
+              fontWeight: 700, 
+              color: 'var(--text-main)', 
+              marginBottom: '1rem',
+              fontFamily: 'var(--font-heading)'
+            }}>
+              {lang === 'id' ? project.title : project.titleEn}
+            </h3>
+            
+            <p style={{ 
+              fontSize: '0.95rem', 
+              color: 'var(--text-muted)', 
+              lineHeight: 1.6,
+              marginBottom: '1.5rem',
+              flexGrow: 1
+            }}>
+              {lang === 'id' ? project.description : project.descriptionEn}
+            </p>
 
-      {!loading && !error && (
-        <motion.div 
-          className="projects-grid mt-12"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '2rem' }}
-        >
-          {repos.map((repo) => (
-            <motion.div 
-              key={repo.id} 
-              className="glass-panel hover-target"
-              variants={itemVariants}
-              style={{ padding: '2rem', display: 'flex', flexDirection: 'column', height: '100%', position: 'relative', overflow: 'hidden' }}
-            >
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1.5rem' }}>
-                <FaGithub size={32} style={{ color: 'var(--accent-secondary)' }} />
-                <div style={{ display: 'flex', gap: '1rem', fontSize: '0.9rem', color: 'var(--text-muted)' }}>
-                  <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                    <FaStar /> {repo.stargazers_count}
-                  </span>
-                  <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                    <FaCodeBranch /> {repo.forks_count}
-                  </span>
-                </div>
-              </div>
+            <div style={{ marginBottom: '1.5rem' }}>
+              <h4 style={{ fontSize: '0.85rem', color: 'var(--text-main)', marginBottom: '0.5rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                {lang === 'id' ? 'Fitur Utama:' : 'Key Features:'}
+              </h4>
+              <ul style={{ listStyleType: 'disc', paddingLeft: '1.2rem', color: 'var(--text-muted)', fontSize: '0.85rem', lineHeight: 1.6 }}>
+                {(lang === 'id' ? project.features : project.featuresEn).map((feature, idx) => (
+                  <li key={idx}>{feature}</li>
+                ))}
+              </ul>
+            </div>
 
-              <h3 style={{ fontSize: '1.4rem', color: 'var(--text-main)', marginBottom: '0.5rem', wordBreak: 'break-word' }}>
-                {repo.name}
-              </h3>
-              
-              <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem', lineHeight: '1.6', marginBottom: '2rem', flex: 1 }}>
-                {repo.description || t('noDescription')}
-              </p>
-
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 'auto', borderTop: '1px solid var(--border-color)', paddingTop: '1.5rem' }}>
-                <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>
-                  {repo.language && (
-                    <span style={{ display: 'inline-block', marginRight: '8px', width: '10px', height: '10px', borderRadius: '50%', backgroundColor: 'var(--accent-color)', verticalAlign: 'middle' }}></span>
-                  )}
-                  {repo.language || 'Code'}
+            <div style={{ 
+              display: 'flex', 
+              flexWrap: 'wrap', 
+              gap: '0.5rem', 
+              marginBottom: '1.5rem' 
+            }}>
+              {project.tech.map((t, i) => (
+                <span key={i} style={{
+                  padding: '0.25rem 0.75rem',
+                  fontSize: '0.75rem',
+                  borderRadius: '100px',
+                  backgroundColor: 'rgba(127, 82, 255, 0.1)',
+                  color: 'var(--accent-color)',
+                  border: '1px solid rgba(127, 82, 255, 0.2)',
+                  fontWeight: 600
+                }}>
+                  {t}
                 </span>
-                
+              ))}
+            </div>
+
+            <div style={{ 
+              display: 'flex', 
+              gap: '1rem',
+              marginTop: 'auto', 
+              borderTop: '1px solid var(--border-color)', 
+              paddingTop: '1.25rem' 
+            }}>
+              {project.link && (
                 <a 
-                  href={repo.html_url} 
+                  href={project.link} 
                   target="_blank" 
-                  rel="noreferrer"
-                  style={{ color: 'var(--accent-secondary)', textDecoration: 'none', fontSize: '0.9rem', fontWeight: '500', display: 'flex', alignItems: 'center', gap: '4px' }}
+                  rel="noopener noreferrer"
                   className="hover-target"
+                  style={{ 
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    gap: '0.5rem', 
+                    color: 'var(--text-main)', 
+                    fontSize: '0.9rem',
+                    textDecoration: 'none',
+                    fontWeight: 500
+                  }}
                 >
-                  {t('visitRepo')}
+                  <FaGithub size={18} /> GitHub
                 </a>
-              </div>
-            </motion.div>
-          ))}
-        </motion.div>
-      )}
+              )}
+              {project.demo && (
+                <a 
+                  href={project.demo} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="hover-target"
+                  style={{ 
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    gap: '0.5rem', 
+                    color: 'var(--accent-secondary)', 
+                    fontSize: '0.9rem',
+                    textDecoration: 'none',
+                    fontWeight: 500
+                  }}
+                >
+                  <FaExternalLinkAlt size={16} /> Live Demo
+                </a>
+              )}
+            </div>
+          </motion.div>
+        ))}
+      </motion.div>
     </div>
   );
 };

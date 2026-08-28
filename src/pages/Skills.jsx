@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import {
   SiHtml5, SiCss, SiReact, SiTailwindcss, SiPhp, SiLaravel,
   SiNodedotjs, SiPython, SiMysql, SiKotlin, SiFirebase,
-  SiGit, SiDocker, SiPostgresql, SiOdoo, SiFlutter,
+  SiGit, SiDocker, SiPostgresql, SiOdoo, SiFlutter, SiGitea
 } from 'react-icons/si';
 
 const skills = [
@@ -21,6 +21,7 @@ const skills = [
   { name: 'Firebase', level: 75, color: '#FFCA28', Icon: SiFirebase, desc: 'Realtime DB & authentication' },
   { name: 'Odoo', level: 70, color: '#714B67', Icon: SiOdoo, desc: 'ERP system development' },
   { name: 'Git', level: 80, color: '#F05032', Icon: SiGit, desc: 'Version control & collaboration' },
+  { name: 'Gitea', level: 75, color: '#609926', Icon: SiGitea, desc: 'Self-hosted Git service' },
   { name: 'Docker', level: 65, color: '#2496ED', Icon: SiDocker, desc: 'Containerization & deployment' },
   { name: 'PostgreSQL', level: 78, color: '#336791', Icon: SiPostgresql, desc: 'Advanced relational database' },
   { name: 'Flutter', level: 70, color: '#02569B', Icon: SiFlutter, desc: 'Cross-platform mobile development' },
