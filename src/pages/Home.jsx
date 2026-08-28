@@ -1,11 +1,11 @@
 import React, { useContext, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { FaGithub, FaLinkedin, FaEnvelope, FaCode, FaLaptopCode, FaRocket } from 'react-icons/fa';
+import { FaCode, FaLaptopCode, FaRocket } from 'react-icons/fa';
 import { SiJavascript, SiReact, SiTailwindcss, SiNodedotjs, SiPython } from 'react-icons/si';
 import { LangContext } from '../contexts/LangContext';
 
-// Komponen FadeIn pengganti Parallax yang berat
+// Komponen FadeIn untuk animasi muncul perlahan saat di-scroll
 const FadeInSection = ({ children, style, delay = 0 }) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-10%" });
@@ -13,8 +13,8 @@ const FadeInSection = ({ children, style, delay = 0 }) => {
   return (
     <motion.section
       ref={ref}
-      initial={{ opacity: 0, y: 30 }}
-      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+      initial={{ opacity: 0, y: 40 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
       transition={{ duration: 0.8, delay: delay, ease: [0.22, 1, 0.36, 1] }}
       style={{ position: 'relative', width: '100%', ...style }}
     >
@@ -22,6 +22,35 @@ const FadeInSection = ({ children, style, delay = 0 }) => {
     </motion.section>
   );
 };
+
+// Tag melayang di atas planet
+const FloatingTag = ({ text, top, left, right, delay, icon }) => (
+  <motion.div
+    initial={{ y: 0 }}
+    animate={{ y: [-10, 10, -10] }}
+    transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay }}
+    style={{
+      position: 'absolute',
+      top, left, right,
+      padding: '0.6rem 1.2rem',
+      borderRadius: '100px',
+      background: 'rgba(255, 255, 255, 0.03)',
+      border: '1px solid rgba(255, 255, 255, 0.1)',
+      backdropFilter: 'blur(10px)',
+      color: 'var(--text-muted)',
+      fontSize: '0.85rem',
+      fontWeight: 500,
+      display: 'flex',
+      alignItems: 'center',
+      gap: '0.5rem',
+      zIndex: 10,
+      boxShadow: '0 10px 30px rgba(0,0,0,0.5)'
+    }}
+  >
+    {icon && <span style={{ color: 'var(--text-main)' }}>{icon}</span>}
+    {text}
+  </motion.div>
+);
 
 const featuredProjects = [
   {
@@ -60,7 +89,7 @@ const featuredSkills = [
 
 const Home = () => {
   const navigate = useNavigate();
-  const { lang, t } = useContext(LangContext);
+  const { lang } = useContext(LangContext);
 
   const sectionStyle = {
     padding: '8rem 5%',
@@ -70,132 +99,140 @@ const Home = () => {
   };
 
   return (
-    <div style={{ position: 'relative', width: '100%', overflowX: 'hidden', minHeight: '100vh', background: 'var(--bg-color)' }}>
+    <div style={{ position: 'relative', width: '100%', overflowX: 'hidden', minHeight: '100vh', background: '#000' }}>
       
-      {/* ===== HERO SECTION ===== */}
+      {/* ===== HERO SECTION (MOTO CARD STYLE) ===== */}
       <section style={{ 
         position: 'relative', 
-        minHeight: '100vh', 
+        height: '100vh',
+        minHeight: '800px',
         display: 'flex', 
+        flexDirection: 'column',
         alignItems: 'center', 
-        justifyContent: 'center',
-        padding: '0 5%',
+        justifyContent: 'flex-start',
+        paddingTop: '20vh',
         overflow: 'hidden'
       }}>
-        {/* Eclipse Glow (Static CSS Gradient instead of JS Tracking) */}
-        <div style={{
-          position: 'absolute',
-          top: '20%',
-          left: '50%',
-          transform: 'translateX(-50%)',
-          width: '600px',
-          height: '600px',
-          background: 'radial-gradient(circle, rgba(127, 82, 255, 0.15) 0%, rgba(0, 229, 255, 0.05) 40%, rgba(3, 3, 5, 0) 70%)',
-          filter: 'blur(60px)',
-          pointerEvents: 'none',
-          zIndex: 0
-        }} />
-
+        
+        {/* Typografi Tengah Atas */}
         <div style={{ 
           position: 'relative', 
-          zIndex: 1, 
-          maxWidth: '900px', 
-          width: '100%', 
+          zIndex: 20, 
           display: 'flex', 
           flexDirection: 'column', 
           alignItems: 'center',
-          textAlign: 'center'
+          textAlign: 'center',
+          padding: '0 5%'
         }}>
-          
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-            style={{ marginBottom: '2rem' }}
-          >
-            <div style={{
-              display: 'inline-block',
-              padding: '0.5rem 1.2rem',
-              borderRadius: '100px',
-              border: '1px solid rgba(255, 255, 255, 0.1)',
-              background: 'rgba(255, 255, 255, 0.03)',
-              color: 'var(--accent-color)',
-              fontWeight: 600,
-              fontSize: '0.85rem',
-              letterSpacing: '0.1em',
-              textTransform: 'uppercase',
-              marginBottom: '1.5rem'
-            }}>
-              {lang === 'id' ? 'Selamat Datang di Portofolio Cosmic' : 'Welcome to Cosmic Portfolio'}
-            </div>
-            
-            <h1 className="hero-title text-gradient-quantum" style={{ 
-              fontSize: 'clamp(3rem, 8vw, 6rem)', 
-              lineHeight: 1.1, 
-              marginBottom: '1.5rem',
-              fontFamily: 'var(--font-heading)'
-            }}>
-              Rayyan Adam<br/>Gunawan
-            </h1>
-            
-            <p style={{ 
-              fontSize: 'clamp(1rem, 2vw, 1.3rem)', 
-              color: 'var(--text-muted)', 
-              maxWidth: '600px', 
-              margin: '0 auto 2.5rem',
-              lineHeight: 1.6
-            }}>
-              {lang === 'id' 
-                ? 'Saya adalah seorang Software Engineer yang membangun aplikasi enterprise dengan performa tinggi.' 
-                : 'I am a Software Engineer building high-performance enterprise applications.'}
-            </p>
-          </motion.div>
-
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-            style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', justifyContent: 'center' }}
+            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
           >
-            <button className="primary-btn" onClick={() => navigate('/projects')}>
-              {lang === 'id' ? 'Lihat Proyek' : 'View Projects'} <FaCode />
-            </button>
-            <button className="secondary-btn" onClick={() => navigate('/about')}>
-              {lang === 'id' ? 'Tentang Saya' : 'About Me'}
-            </button>
-          </motion.div>
+            <h1 style={{ 
+              fontSize: 'clamp(2.5rem, 6vw, 5.5rem)', 
+              lineHeight: 1.1, 
+              marginBottom: '1.5rem',
+              fontFamily: 'var(--font-heading)',
+              fontWeight: 800,
+              color: '#fff',
+              letterSpacing: '-0.03em',
+              textTransform: 'uppercase'
+            }}>
+              {lang === 'id' ? 'Infrastruktur' : 'Infrastructure'}<br/>
+              {lang === 'id' ? 'Untuk Masa Depan' : 'For How You Build'}
+            </h1>
+            
+            <p style={{ 
+              fontSize: 'clamp(0.9rem, 1.5vw, 1.1rem)', 
+              color: '#888', 
+              maxWidth: '500px', 
+              margin: '0 auto 2.5rem',
+              lineHeight: 1.6,
+              fontWeight: 500
+            }}>
+              {lang === 'id' 
+                ? 'Dari sistem enterprise hingga antarmuka modern. Rayyan membangun ekosistem digital yang tangguh.' 
+                : 'From enterprise systems to modern interfaces. Rayyan builds resilient digital ecosystems.'}
+            </p>
 
-          {/* Social Links */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1, delay: 0.5 }}
-            style={{ display: 'flex', gap: '1.5rem', marginTop: '4rem' }}
-          >
-            <a href="https://github.com/rayyanadamgunawan" target="_blank" rel="noreferrer" style={{ color: 'var(--text-muted)', fontSize: '1.5rem', transition: 'color 0.2s' }} onMouseOver={e => e.currentTarget.style.color = 'var(--text-main)'} onMouseOut={e => e.currentTarget.style.color = 'var(--text-muted)'}><FaGithub /></a>
-            <a href="#" target="_blank" rel="noreferrer" style={{ color: 'var(--text-muted)', fontSize: '1.5rem', transition: 'color 0.2s' }} onMouseOver={e => e.currentTarget.style.color = 'var(--text-main)'} onMouseOut={e => e.currentTarget.style.color = 'var(--text-muted)'}><FaLinkedin /></a>
-            <a href="mailto:rayyanadamgunawan@gmail.com" style={{ color: 'var(--text-muted)', fontSize: '1.5rem', transition: 'color 0.2s' }} onMouseOver={e => e.currentTarget.style.color = 'var(--text-main)'} onMouseOut={e => e.currentTarget.style.color = 'var(--text-muted)'}><FaEnvelope /></a>
+            {/* Pill Button ala Moto Card */}
+            <button 
+              onClick={() => navigate('/projects')}
+              style={{
+                padding: '0.8rem 2rem',
+                borderRadius: '100px',
+                background: '#fff',
+                color: '#000',
+                fontWeight: 600,
+                fontSize: '0.95rem',
+                border: 'none',
+                transition: 'transform 0.2s, opacity 0.2s'
+              }}
+              onMouseOver={(e) => e.currentTarget.style.opacity = '0.8'}
+              onMouseOut={(e) => e.currentTarget.style.opacity = '1'}
+              className="hover-target"
+            >
+              {lang === 'id' ? 'Lihat Proyek' : 'View Projects'}
+            </button>
           </motion.div>
         </div>
+
+        {/* Planet Raksasa di Bawah */}
+        <div style={{
+          position: 'absolute',
+          bottom: '-60vw',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          width: '150vw',
+          height: '150vw',
+          borderRadius: '50%',
+          background: 'radial-gradient(circle at 50% 0%, rgba(15, 23, 42, 1) 0%, rgba(0, 0, 0, 1) 40%)',
+          borderTop: '1px solid rgba(255, 255, 255, 0.15)',
+          boxShadow: 'inset 0 5px 30px rgba(255, 255, 255, 0.05), 0 -20px 100px rgba(127, 82, 255, 0.1)',
+          zIndex: 5
+        }}>
+          {/* Atmosfer planet (Glow luar) */}
+          <div style={{
+            position: 'absolute',
+            top: '-20px', left: '0', right: '0', height: '100px',
+            borderRadius: '50%',
+            background: 'linear-gradient(to top, rgba(127, 82, 255, 0.2), transparent)',
+            filter: 'blur(20px)', pointerEvents: 'none'
+          }}/>
+        </div>
+
+        {/* Floating Tags (Badge ala Moto Card) */}
+        <FloatingTag top="55%" left="15%" text="Odoo ERP" icon={<FaCode />} delay={0} />
+        <FloatingTag top="65%" right="20%" text="Laravel Systems" icon={<FaLaptopCode />} delay={1.5} />
+        <FloatingTag top="75%" left="25%" text="React / Flutter" icon={<FaRocket />} delay={0.8} />
+
       </section>
 
       {/* ===== FEATURED PROJECTS ===== */}
-      <FadeInSection style={sectionStyle}>
+      <FadeInSection style={{...sectionStyle, paddingTop: '10rem'}}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '4rem', flexWrap: 'wrap', gap: '1rem' }}>
           <div>
-            <p style={{ color: 'var(--accent-secondary)', fontWeight: 600, letterSpacing: '0.15em', textTransform: 'uppercase', fontSize: '0.85rem', marginBottom: '0.5rem' }}>
-              {lang === 'id' ? 'Sorotan Karya' : 'Featured Work'}
-            </p>
-            <h2 style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', fontFamily: 'var(--font-heading)', fontWeight: 800 }}>
-              {lang === 'id' ? 'Proyek Terbaik' : 'Top Projects'}
+            <h2 style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', fontFamily: 'var(--font-heading)', fontWeight: 800, color: '#fff' }}>
+              {lang === 'id' ? 'Proyek Unggulan' : 'Featured Work'}
             </h2>
+            <p style={{ color: '#888', marginTop: '0.5rem' }}>
+              {lang === 'id' ? 'Sistem yang dibangun dengan standar industri.' : 'Systems built with industry standards.'}
+            </p>
           </div>
-          <button className="secondary-btn" onClick={() => navigate('/projects')} style={{ fontSize: '0.9rem' }}>
-            {lang === 'id' ? 'Lihat Semua →' : 'View All →'}
+          <button 
+            onClick={() => navigate('/projects')} 
+            style={{ 
+              background: 'transparent', border: '1px solid #333', color: '#fff', 
+              padding: '0.6rem 1.5rem', borderRadius: '100px', fontSize: '0.9rem' 
+            }}
+            className="hover-target"
+          >
+            {lang === 'id' ? 'Lihat Semua' : 'View All'}
           </button>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 300px), 1fr))', gap: '2rem' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 300px), 1fr))', gap: '1.5rem' }}>
           {featuredProjects.map((proj, idx) => (
             <motion.div
               key={idx}
@@ -203,7 +240,7 @@ const Home = () => {
               onClick={() => navigate(proj.link)}
               style={{
                 display: 'flex', flexDirection: 'column', gap: '1.5rem', padding: '2.5rem 2rem',
-                borderRadius: '1rem',
+                borderRadius: '1.25rem',
                 background: 'rgba(255,255,255,0.02)',
                 border: '1px solid rgba(255,255,255,0.05)',
                 cursor: 'pointer',
@@ -211,18 +248,18 @@ const Home = () => {
                 overflow: 'hidden'
               }}
             >
-              {/* Subtle hover glow using pseudo element approach conceptually done via simple radial bg */}
+              {/* Subtle hover glow */}
               <div style={{ position: 'absolute', top: 0, right: 0, width: '150px', height: '150px', background: `radial-gradient(circle, ${proj.color}15 0%, transparent 70%)`, filter: 'blur(20px)', opacity: 0.6 }} />
               
               <span style={{ fontSize: '2.5rem' }}>{proj.icon}</span>
-              <h3 style={{ color: 'var(--text-main)', fontSize: '1.4rem', fontFamily: 'var(--font-heading)', zIndex: 1 }}>{proj.title}</h3>
-              <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem', lineHeight: 1.7, flex: 1, zIndex: 1 }}>{proj.desc}</p>
+              <h3 style={{ color: '#fff', fontSize: '1.4rem', fontFamily: 'var(--font-heading)', zIndex: 1 }}>{proj.title}</h3>
+              <p style={{ color: '#888', fontSize: '0.95rem', lineHeight: 1.7, flex: 1, zIndex: 1 }}>{proj.desc}</p>
               
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', zIndex: 1 }}>
                 {proj.tech.map(tech => (
                   <span key={tech} style={{
                     fontSize: '0.75rem', fontWeight: 600, padding: '0.3rem 0.8rem',
-                    borderRadius: '4px', background: 'rgba(255,255,255,0.05)', color: 'var(--text-main)'
+                    borderRadius: '100px', background: 'rgba(255,255,255,0.05)', color: '#bbb'
                   }}>
                     {tech}
                   </span>
@@ -234,37 +271,30 @@ const Home = () => {
       </FadeInSection>
 
       {/* ===== SKILLS PREVIEW ===== */}
-      <FadeInSection style={sectionStyle} delay={0.2}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '4rem', flexWrap: 'wrap', gap: '1rem' }}>
-          <div>
-            <p style={{ color: 'var(--accent-secondary)', fontWeight: 600, letterSpacing: '0.15em', textTransform: 'uppercase', fontSize: '0.85rem', marginBottom: '0.5rem' }}>
-              {lang === 'id' ? 'Yang Saya Kuasai' : 'What I Use'}
-            </p>
-            <h2 style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', fontFamily: 'var(--font-heading)', fontWeight: 800 }}>
-              {lang === 'id' ? 'Teknologi Utama' : 'Main Tech Stack'}
-            </h2>
-          </div>
-          <button className="secondary-btn" onClick={() => navigate('/skills')} style={{ fontSize: '0.9rem' }}>
-            {lang === 'id' ? 'Lihat Semua →' : 'View All →'}
-          </button>
+      <FadeInSection style={sectionStyle} delay={0.1}>
+        <div style={{ marginBottom: '4rem' }}>
+          <h2 style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', fontFamily: 'var(--font-heading)', fontWeight: 800, color: '#fff' }}>
+            {lang === 'id' ? 'Ekosistem Teknologi' : 'Technology Ecosystem'}
+          </h2>
         </div>
 
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(120px, 1fr))', gap: '1.5rem' }}>
           {featuredSkills.map((skill, idx) => (
             <motion.div
               key={idx}
-              whileHover={{ y: -5, scale: 1.05, transition: { type: "spring", stiffness: 400 } }}
+              whileHover={{ scale: 1.05, background: 'rgba(255,255,255,0.05)' }}
               onClick={() => navigate('/skills')}
               style={{
                 display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
-                gap: '1rem', padding: '2rem 1rem', borderRadius: '1rem',
-                background: 'rgba(255,255,255,0.02)',
-                border: '1px solid rgba(255,255,255,0.05)',
-                cursor: 'pointer'
+                gap: '1rem', padding: '2rem 1rem', borderRadius: '1.25rem',
+                background: 'rgba(255,255,255,0.01)',
+                border: '1px solid rgba(255,255,255,0.03)',
+                cursor: 'pointer',
+                transition: 'background 0.3s'
               }}
             >
               <skill.Icon size={45} color={skill.color} />
-              <span style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-main)' }}>
+              <span style={{ fontSize: '0.85rem', fontWeight: 600, color: '#aaa' }}>
                 {skill.name}
               </span>
             </motion.div>
@@ -276,28 +306,33 @@ const Home = () => {
       <FadeInSection style={{ ...sectionStyle, paddingBottom: '8rem' }} delay={0.2}>
         <div style={{
           padding: 'clamp(3rem, 6vw, 5rem) clamp(2rem, 4vw, 4rem)',
-          background: 'rgba(255,255,255,0.02)',
-          border: '1px solid rgba(255,255,255,0.05)',
+          background: 'rgba(255,255,255,0.01)',
+          border: '1px solid rgba(255,255,255,0.03)',
           textAlign: 'center',
-          borderRadius: '1rem',
+          borderRadius: '2rem',
           position: 'relative',
           overflow: 'hidden'
         }}>
-          <div style={{ position: 'absolute', bottom: '-50%', left: '50%', transform: 'translateX(-50%)', width: '300px', height: '300px', background: 'radial-gradient(circle, rgba(127,82,255,0.2) 0%, transparent 70%)', filter: 'blur(40px)', pointerEvents: 'none' }} />
-          
           <h2 style={{
             fontSize: 'clamp(2rem, 5vw, 3.5rem)', fontFamily: 'var(--font-heading)', fontWeight: 800, marginBottom: '1.5rem',
-            color: 'var(--text-main)', lineHeight: 1.2, position: 'relative', zIndex: 1
+            color: '#fff', lineHeight: 1.2, position: 'relative', zIndex: 1, letterSpacing: '-0.02em'
           }}>
-            {lang === 'id' ? 'Mari Berkolaborasi' : "Let's Collaborate"}
+            {lang === 'id' ? 'Siap Berkolaborasi?' : "Ready to Collaborate?"}
           </h2>
-          <p style={{ color: 'var(--text-muted)', maxWidth: '500px', margin: '0 auto 2.5rem', lineHeight: 1.8, fontSize: '1.05rem', position: 'relative', zIndex: 1 }}>
+          <p style={{ color: '#888', maxWidth: '500px', margin: '0 auto 2.5rem', lineHeight: 1.8, fontSize: '1.05rem', position: 'relative', zIndex: 1 }}>
             {lang === 'id'
-              ? 'Saya terbuka untuk proyek freelance, kolaborasi, atau kesempatan kerja baru. Yuk, ngobrol!'
-              : "I'm open to freelance projects, collaborations, or new job opportunities. Let's talk!"}
+              ? 'Mari diskusikan bagaimana kita bisa membangun solusi digital yang tangguh bersama.'
+              : "Let's discuss how we can build resilient digital solutions together."}
           </p>
-          <button className="primary-btn" onClick={() => navigate('/contact')} style={{ fontSize: '1rem', padding: '1rem 3rem', position: 'relative', zIndex: 1 }}>
-            {lang === 'id' ? 'Kirim Pesan 🚀' : 'Send a Message 🚀'}
+          <button 
+            onClick={() => navigate('/contact')} 
+            style={{ 
+              background: '#fff', color: '#000', padding: '1rem 3rem', borderRadius: '100px', 
+              fontWeight: 600, fontSize: '1rem', border: 'none', position: 'relative', zIndex: 1 
+            }}
+            className="hover-target"
+          >
+            {lang === 'id' ? 'Mulai Percakapan' : 'Start a Conversation'}
           </button>
         </div>
       </FadeInSection>
