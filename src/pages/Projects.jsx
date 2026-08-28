@@ -33,6 +33,36 @@ const manualProjects = [
     tech: ['React.js', 'TailwindCSS', 'Framer Motion', 'Vite'],
     link: 'https://github.com/rayyanadamgunawan/portofolio_rayyan',
     demo: 'https://rayyan-portfolio-82b30.web.app/'
+  },
+  {
+    id: 3,
+    title: 'Sistem Manajemen ERP (Odoo)',
+    titleEn: 'ERP Management System (Odoo)',
+    icon: <FaRocket size={40} />,
+    description: 'Pengembangan dan kustomisasi modul ERP berbasis Odoo untuk mengelola inventaris, penjualan, dan akuntansi bisnis secara terintegrasi.',
+    descriptionEn: 'Development and customization of Odoo-based ERP modules to manage business inventory, sales, and accounting in an integrated manner.',
+    fullDesc: 'Sistem ini adalah kustomisasi framework ERP Odoo berskala enterprise. Arsitekturnya difokuskan pada otomatisasi alur kerja (workflow) untuk meminimalisir kesalahan manusia dalam input data penjualan dan inventaris. Sistem back-end dikonfigurasi dengan Python untuk logika bisnis, sementara database PostgreSQL menangani relasi data yang kompleks dengan integritas tinggi. Proyek ini tidak dipublikasikan ke publik karena mengandung logika internal spesifik dari organisasi terkait.',
+    fullDescEn: 'This system is an enterprise-scale customization of the Odoo ERP framework. The architecture focuses on workflow automation to minimize human error in sales and inventory data input. The back-end system is configured with Python for business logic, while the PostgreSQL database handles complex data relations with high integrity. This project is kept private as it contains specific internal logic belonging to the related organization.',
+    features: ['Custom Module Creation', 'Automated Workflows', 'Integrasi Database Skala Besar', 'Secure Role-based Access'],
+    featuresEn: ['Custom Module Creation', 'Automated Workflows', 'Large-scale Database Integration', 'Secure Role-based Access'],
+    tech: ['Odoo', 'Python', 'PostgreSQL', 'XML'],
+    link: null,
+    demo: null
+  },
+  {
+    id: 4,
+    title: 'Aplikasi Mobile Native',
+    titleEn: 'Native Mobile App',
+    icon: <FaRocket size={40} />,
+    description: 'Aplikasi Android native yang dirancang untuk performa tinggi, memanfaatkan arsitektur modern untuk pengalaman pengguna yang responsif.',
+    descriptionEn: 'Native Android application designed for high performance, utilizing modern architecture for a responsive user experience.',
+    fullDesc: 'Aplikasi mobile ini dibangun secara native menggunakan Kotlin dan Android Studio. Inti dari aplikasi ini adalah pemrosesan data real-time menggunakan background services dan arsitektur MVVM (Model-View-ViewModel). Firebase digunakan sebagai backend-as-a-service untuk sinkronisasi data seketika antar perangkat pengguna. Proyek ini bersifat tertutup (private) karena merupakan proprietary software dengan hak cipta intelektual.',
+    fullDescEn: 'This mobile application is built natively using Kotlin and Android Studio. The core of this app is real-time data processing using background services and the MVVM (Model-View-ViewModel) architecture. Firebase is used as a backend-as-a-service for instant data synchronization across user devices. This project is closed-source (private) as it is proprietary software with intellectual property rights.',
+    features: ['Arsitektur MVVM Android', 'Sinkronisasi Real-time', 'Material UI Design', 'Offline-first Capabilities'],
+    featuresEn: ['Android MVVM Architecture', 'Real-time Synchronization', 'Material UI Design', 'Offline-first Capabilities'],
+    tech: ['Kotlin', 'Android Studio', 'Firebase', 'SQLite / Room'],
+    link: null,
+    demo: null
   }
 ];
 
