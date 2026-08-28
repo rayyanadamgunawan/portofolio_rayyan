@@ -5,7 +5,6 @@ import { ThemeProvider } from './contexts/ThemeContext';
 
 // Components
 import Navbar from './components/Navbar';
-import CustomCursor from './components/CustomCursor';
 import PageTransition from './components/PageTransition';
 
 // Pages
@@ -41,7 +40,6 @@ function App() {
   return (
     <ThemeProvider>
       <Router>
-        <CustomCursor />
         <div className="app-container">
           <Navbar />
           

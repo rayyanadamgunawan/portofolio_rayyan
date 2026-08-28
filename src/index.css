@@ -3,15 +3,15 @@
 @tailwind utilities;
 
 :root {
-  /* Dark Theme (Quantum Aurora) */
-  --bg-main: #050814;
-  --bg-main-rgb: 5, 8, 20;
-  --surface: rgba(17, 24, 39, 0.5);
-  --surface-hover: rgba(17, 24, 39, 0.8);
-  --border-color: rgba(127, 82, 255, 0.15);
+  /* Dark Theme (Deep Space Minimalist) */
+  --bg-main: #030305;
+  --bg-main-rgb: 3, 3, 5;
+  --surface: rgba(255, 255, 255, 0.02);
+  --surface-hover: rgba(255, 255, 255, 0.05);
+  --border-color: rgba(255, 255, 255, 0.05);
   --border-highlight: rgba(127, 82, 255, 0.4);
-  --text-main: #F3F4F6;
-  --text-muted: #9CA3AF;
+  --text-main: #F8FAFC;
+  --text-muted: #94A3B8;
   --accent-color: #7F52FF;
   --accent-secondary: #00E5FF;
   
@@ -53,11 +53,11 @@ body {
   line-height: 1.6;
   min-height: 100vh;
   overflow-x: hidden;
-  cursor: none !important;
+  cursor: auto;
 }
 
 a, button, input, textarea, select {
-  cursor: none !important;
+  cursor: pointer;
   font-family: inherit;
 }
 
@@ -122,20 +122,20 @@ h1, h2, h3, h4, h5, h6 {
   margin-bottom: 3rem;
 }
 
-/* Glassmorphism utility */
+/* Glassmorphism utility - Lightweight version */
 .glass-panel {
   background: var(--surface);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border: 1px solid var(--border-color);
   border-radius: 1.25rem;
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.15);
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .glass-panel:hover {
   border-color: var(--border-highlight);
-  box-shadow: 0 12px 48px 0 rgba(0, 0, 0, 0.2), inset 0 0 20px rgba(127, 82, 255, 0.05);
+  background: var(--surface-hover);
+  box-shadow: 0 0 20px rgba(127, 82, 255, 0.1);
 }
 
 /* Typography Enhancements */
@@ -143,36 +143,6 @@ h1, h2, h3, h4, h5, h6 {
   background: linear-gradient(135deg, var(--accent-color), var(--accent-secondary)) !important;
   -webkit-background-clip: text !important;
   -webkit-text-fill-color: transparent !important;
-}
-
-/* Custom Cursor - Solid Morphing Style */
-.custom-cursor-solid {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 9999;
-  will-change: transform;
-  background-color: var(--accent-color);
-  box-shadow: 0 0 10px var(--accent-color);
-}
-
-/* Hide custom cursor on mobile devices */
-@media (max-width: 768px) {
-  .custom-cursor-solid {
-    display: none;
-  }
-  
-  body, a, button, input, textarea, select {
-    cursor: auto !important;
-  }
-  
-  a, button {
-    cursor: pointer !important;
-  }
 }
 
 /* Top Navbar */
