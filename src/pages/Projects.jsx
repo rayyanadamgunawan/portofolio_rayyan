@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { LangContext } from '../contexts/LangContext';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FaGithub, FaExternalLinkAlt, FaRocket, FaTimes, FaBookOpen, FaUserCircle, FaBriefcase, FaChartBar, FaUserMd, FaShieldAlt, FaStore } from 'react-icons/fa';
+import { FaGithub, FaExternalLinkAlt, FaRocket, FaTimes, FaBookOpen, FaUserCircle, FaBriefcase, FaChartBar, FaUserMd, FaStore, FaMobileAlt, FaDesktop } from 'react-icons/fa';
 
 const manualProjects = [
   {
@@ -52,31 +52,52 @@ const manualProjects = [
   },
   {
     id: 3,
-    title: 'Enterprise Operations (Web & App)',
-    titleEn: 'Enterprise Operations (Web & App)',
-    icon: <FaBriefcase size={40} />,
-    description: 'Sistem manajemen operasional skala besar (proprietary) terintegrasi antara platform Web dan Mobile App.',
-    descriptionEn: 'Large-scale integrated operational management system (proprietary) across Web and Mobile App platforms.',
-    fullDesc: 'Sistem operasional ini dirancang khusus untuk memenuhi standar industri enterprise berisiko tinggi. Fungsionalitas aplikasi mencakup pemantauan data operasional harian, manajemen aset, pencatatan log petugas di lapangan secara mobile, dan sinkronisasi data terpusat ke dashboard web. Proyek ini bersifat rahasia (confidential) sehingga detail entitas tidak dipublikasikan.',
-    fullDescEn: 'This operational system is specifically designed to meet high-risk enterprise industry standards. Application functionality includes daily operational data monitoring, asset management, mobile field worker logging, and centralized data synchronization to a web dashboard. This project is confidential.',
+    title: 'Enterprise Operations Web',
+    titleEn: 'Enterprise Operations Web',
+    icon: <FaDesktop size={40} />,
+    description: 'Dashboard manajemen operasional skala besar (proprietary) berbasis Web untuk administrasi terpusat.',
+    descriptionEn: 'Large-scale Web-based operational management dashboard (proprietary) for centralized administration.',
+    fullDesc: 'Sistem operasional web ini dirancang khusus untuk memenuhi standar industri enterprise berisiko tinggi. Fungsionalitas utamanya mencakup pemantauan data operasional harian secara real-time, manajemen aset, serta rekapitulasi data dari lapangan. Proyek ini bersifat rahasia (confidential).',
+    fullDescEn: 'This web operational system is specifically designed to meet high-risk enterprise industry standards. Its main functionality includes real-time daily operational data monitoring, asset management, and field data recapitulation. This project is confidential.',
     features: [
-      'Dashboard Web Terpusat: Memvisualisasikan seluruh data operasional lapangan dalam satu layar pemantauan.',
-      'Mobile Field Input: Aplikasi Android untuk petugas lapangan menginput data dengan dukungan kapabilitas offline-first.',
+      'Dashboard Web Terpusat: Memvisualisasikan seluruh data operasional lapangan dalam satu layar pemantauan interaktif.',
       'Sistem Otorisasi Berjenjang: Hak akses kompleks (Role-based Access Control) dari level operator hingga manajemen atas.',
       'Laporan Otomatis: Generator dokumen (PDF/Excel) untuk pelaporan operasional harian dan bulanan.'
     ],
     featuresEn: [
-      'Centralized Web Dashboard: Visualizes all field operational data in a single monitoring screen.',
-      'Mobile Field Input: Android app for field workers to input data with offline-first capabilities.',
+      'Centralized Web Dashboard: Visualizes all field operational data in a single interactive monitoring screen.',
       'Multi-tier Authorization: Complex Role-based Access Control (RBAC) from operator to upper management.',
       'Automated Reporting: Document generator (PDF/Excel) for daily and monthly operational reporting.'
     ],
-    tech: ['React / Vue', 'Kotlin (Android)', 'Node.js / PHP', 'PostgreSQL', 'REST API'],
+    tech: ['React / Vue', 'Node.js / PHP', 'PostgreSQL', 'REST API'],
     link: null,
     demo: null
   },
   {
     id: 4,
+    title: 'Enterprise Operations App',
+    titleEn: 'Enterprise Operations App',
+    icon: <FaMobileAlt size={40} />,
+    description: 'Aplikasi Android pendamping untuk petugas lapangan (proprietary) dengan sinkronisasi ke server pusat.',
+    descriptionEn: 'Companion Android app for field workers (proprietary) with synchronization to the central server.',
+    fullDesc: 'Aplikasi mobile ini ditujukan untuk petugas lapangan di lingkungan operasional enterprise. Sistem ini berfokus pada kemudahan input data dalam kondisi mobilitas tinggi. Dibekali kemampuan bekerja secara offline ketika konektivitas terputus, dan otomatis sinkronisasi (sync) saat jaringan kembali stabil. Proyek ini bersifat rahasia.',
+    fullDescEn: 'This mobile app is intended for field workers in an enterprise operational environment. The system focuses on easy data input under high mobility conditions. Equipped with offline capabilities when connectivity drops, and automatically syncs when the network stabilizes. This project is confidential.',
+    features: [
+      'Mobile Field Input: Form pencatatan data harian yang dioptimalkan untuk perangkat mobile.',
+      'Offline-First Sync: Data tetap bisa diinput tanpa internet dan otomatis terkirim saat online.',
+      'Geotagging & Kamera: Pencatatan bukti lapangan yang mengikat kordinat GPS dan waktu.'
+    ],
+    featuresEn: [
+      'Mobile Field Input: Daily data logging form optimized for mobile devices.',
+      'Offline-First Sync: Data can be logged without internet and automatically sends when online.',
+      'Geotagging & Camera: Field evidence logging tied to GPS coordinates and time.'
+    ],
+    tech: ['Kotlin / Flutter', 'SQLite / Room', 'REST API Client', 'Geolocation'],
+    link: null,
+    demo: null
+  },
+  {
+    id: 5,
     title: 'Sistem Pendukung Keputusan (SPK)',
     titleEn: 'Decision Support System (DSS)',
     icon: <FaChartBar size={40} />,
@@ -99,7 +120,7 @@ const manualProjects = [
     demo: null
   },
   {
-    id: 5,
+    id: 6,
     title: 'EduCounsel - Portal Konseling',
     titleEn: 'EduCounsel - Counseling Portal',
     icon: <FaUserMd size={40} />,
@@ -122,7 +143,7 @@ const manualProjects = [
     demo: null
   },
   {
-    id: 6,
+    id: 7,
     title: 'CEMAS (Community E-Marketplace)',
     titleEn: 'CEMAS (Community E-Marketplace)',
     icon: <FaStore size={40} />,
@@ -141,7 +162,7 @@ const manualProjects = [
       'Order Tracking Dashboard: Dedicated panel to track transaction status from ordering to delivery.'
     ],
     tech: ['Web Framework', 'Database SQL', 'REST API', 'Payment/Cart System'],
-    link: 'https://github.com/rayyanadamgunawan/nelay',
+    link: null,
     demo: null
   }
 ];
@@ -395,7 +416,7 @@ const Projects = () => {
 
                   <div>
                     <h4 style={{ fontSize: '1rem', color: 'var(--text-main)', marginBottom: '0.75rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                      Tech Stack:
+                      {lang === 'id' ? 'Tech Stack & Bahasa Pemrograman:' : 'Tech Stack & Languages Used:'}
                     </h4>
                     <motion.div layoutId={`project-tech-${selectedProject.id}`} style={{ 
                       display: 'flex', 
