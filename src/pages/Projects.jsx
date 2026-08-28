@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { LangContext } from '../contexts/LangContext';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FaGithub, FaExternalLinkAlt, FaRocket, FaTimes, FaBookOpen, FaUserCircle, FaBriefcase, FaChartBar, FaUserMd, FaStore, FaMobileAlt, FaDesktop } from 'react-icons/fa';
+import { FaGithub, FaExternalLinkAlt, FaRocket, FaTimes, FaBookOpen, FaUserCircle, FaBriefcase, FaChartBar, FaUserMd, FaStore, FaMobileAlt, FaDesktop, FaQrcode } from 'react-icons/fa';
 
 const manualProjects = [
   {
@@ -52,47 +52,47 @@ const manualProjects = [
   },
   {
     id: 3,
-    title: 'Enterprise Operations Web',
-    titleEn: 'Enterprise Operations Web',
+    title: 'Enterprise Validation Web',
+    titleEn: 'Enterprise Validation Web',
     icon: <FaDesktop size={40} />,
-    description: 'Dashboard manajemen operasional skala besar (proprietary) berbasis Web untuk administrasi terpusat.',
-    descriptionEn: 'Large-scale Web-based operational management dashboard (proprietary) for centralized administration.',
-    fullDesc: 'Sistem operasional web ini dirancang khusus untuk memenuhi standar industri enterprise berisiko tinggi. Fungsionalitas utamanya mencakup pemantauan data operasional harian secara real-time, manajemen aset, serta rekapitulasi data dari lapangan. Proyek ini bersifat rahasia (confidential).',
-    fullDescEn: 'This web operational system is specifically designed to meet high-risk enterprise industry standards. Its main functionality includes real-time daily operational data monitoring, asset management, and field data recapitulation. This project is confidential.',
+    description: 'Sistem informasi operasional dan dashboard validasi berskala enterprise berbasis framework Odoo.',
+    descriptionEn: 'Enterprise-scale operational information system and validation dashboard based on the Odoo framework.',
+    fullDesc: 'Sistem operasional web ini dirancang khusus untuk memenuhi standar industri enterprise. Proyek ini dibangun di atas framework Odoo dengan kustomisasi mendalam menggunakan Python dan XML (mencakup pengembangan add-on khusus). Fungsionalitas utamanya berpusat pada pemantauan data secara terpusat, otorisasi transaksi operasional, pengelolaan riwayat (history) aktivitas, dan penyediaan API endpoints khusus bagi integrasi aplikasi mobile. Proyek ini bersifat konfidensial.',
+    fullDescEn: 'This web operational system is specifically designed to meet enterprise industry standards. Built on the Odoo framework with deep customization using Python and XML (including custom add-on development). Its main functionality revolves around centralized data monitoring, operational transaction authorization, activity history management, and providing custom API endpoints for mobile app integration. This project is confidential.',
     features: [
-      'Dashboard Web Terpusat: Memvisualisasikan seluruh data operasional lapangan dalam satu layar pemantauan interaktif.',
-      'Sistem Otorisasi Berjenjang: Hak akses kompleks (Role-based Access Control) dari level operator hingga manajemen atas.',
-      'Laporan Otomatis: Generator dokumen (PDF/Excel) untuk pelaporan operasional harian dan bulanan.'
+      'Dashboard Sentral: Memvisualisasikan seluruh data operasional dengan modul pelaporan dan riwayat transaksi (history/reason log).',
+      'Kustomisasi XML & Odoo: Antarmuka internal (backend) yang dirombak total menggunakan custom patch XML dan controller Python.',
+      'Custom API Endpoints: Menyiapkan jembatan (API) aman untuk proses upload foto dan validasi bagi perangkat mobile eksternal.'
     ],
     featuresEn: [
-      'Centralized Web Dashboard: Visualizes all field operational data in a single interactive monitoring screen.',
-      'Multi-tier Authorization: Complex Role-based Access Control (RBAC) from operator to upper management.',
-      'Automated Reporting: Document generator (PDF/Excel) for daily and monthly operational reporting.'
+      'Central Dashboard: Visualizes all operational data with reporting modules and transaction history (reason logs).',
+      'XML & Odoo Customization: Completely overhauled internal backend interface using custom XML patches and Python controllers.',
+      'Custom API Endpoints: Secure bridge (APIs) prepared for photo uploads and validation processes from external mobile devices.'
     ],
-    tech: ['React / Vue', 'Node.js / PHP', 'PostgreSQL', 'REST API'],
+    tech: ['Odoo', 'Python', 'XML', 'PostgreSQL', 'Docker'],
     link: null,
     demo: null
   },
   {
     id: 4,
-    title: 'Enterprise Operations App',
-    titleEn: 'Enterprise Operations App',
-    icon: <FaMobileAlt size={40} />,
-    description: 'Aplikasi Android pendamping untuk petugas lapangan (proprietary) dengan sinkronisasi ke server pusat.',
-    descriptionEn: 'Companion Android app for field workers (proprietary) with synchronization to the central server.',
-    fullDesc: 'Aplikasi mobile ini ditujukan untuk petugas lapangan di lingkungan operasional enterprise. Sistem ini berfokus pada kemudahan input data dalam kondisi mobilitas tinggi. Dibekali kemampuan bekerja secara offline ketika konektivitas terputus, dan otomatis sinkronisasi (sync) saat jaringan kembali stabil. Proyek ini bersifat rahasia.',
-    fullDescEn: 'This mobile app is intended for field workers in an enterprise operational environment. The system focuses on easy data input under high mobility conditions. Equipped with offline capabilities when connectivity drops, and automatically syncs when the network stabilizes. This project is confidential.',
+    title: 'Enterprise Mobile Scanner',
+    titleEn: 'Enterprise Mobile Scanner',
+    icon: <FaQrcode size={40} />,
+    description: 'Aplikasi mobile validasi (proprietary) dengan fitur pemindaian QR Code dan autentikasi biometrik/foto.',
+    descriptionEn: 'Proprietary mobile validation app featuring QR Code scanning and biometric/photo authentication.',
+    fullDesc: 'Aplikasi mobile ini ditujukan khusus untuk eksekusi operasional di lapangan. Dibangun menggunakan framework cross-platform Flutter yang terhubung langsung ke backend Odoo. Fungsionalitas utamanya sangat krusial, meliputi pemindaian QR Code (QR Scanner Overlay) untuk validasi instan, pengambilan bukti foto dari kamera secara langsung, serta antarmuka (UI/UX) khusus yang dioptimalkan untuk kecepatan kerja operasional.',
+    fullDescEn: 'This mobile application is strictly tailored for field operational execution. Built using the cross-platform Flutter framework, it connects directly to the Odoo backend. Its main functionality is crucial, including QR Code scanning (QR Scanner Overlay) for instant validation, direct camera photo evidence capturing, and a specialized UI/UX optimized for high-speed operational work.',
     features: [
-      'Mobile Field Input: Form pencatatan data harian yang dioptimalkan untuk perangkat mobile.',
-      'Offline-First Sync: Data tetap bisa diinput tanpa internet dan otomatis terkirim saat online.',
-      'Geotagging & Kamera: Pencatatan bukti lapangan yang mengikat kordinat GPS dan waktu.'
+      'QR Code Validation Overlay: Modul kamera khusus untuk memindai kode unik dengan proses validasi sepersekian detik.',
+      'Direct Photo Uploads: Pengambilan dan pengiriman bukti foto secara real-time ke sistem terpusat.',
+      'Flutter-to-Odoo Integration: Manajemen state yang kompleks untuk sinkronisasi data dari aplikasi mobile ke database PostgreSQL.'
     ],
     featuresEn: [
-      'Mobile Field Input: Daily data logging form optimized for mobile devices.',
-      'Offline-First Sync: Data can be logged without internet and automatically sends when online.',
-      'Geotagging & Camera: Field evidence logging tied to GPS coordinates and time.'
+      'QR Code Validation Overlay: Specialized camera module for scanning unique codes with split-second validation processing.',
+      'Direct Photo Uploads: Real-time capturing and submission of photo evidence to the centralized system.',
+      'Flutter-to-Odoo Integration: Complex state management for data synchronization from the mobile app to the PostgreSQL database.'
     ],
-    tech: ['Kotlin / Flutter', 'SQLite / Room', 'REST API Client', 'Geolocation'],
+    tech: ['Flutter / Dart', 'Dart HTTP', 'Camera API', 'REST API (Odoo)'],
     link: null,
     demo: null
   },
@@ -101,21 +101,21 @@ const manualProjects = [
     title: 'Sistem Pendukung Keputusan (SPK)',
     titleEn: 'Decision Support System (DSS)',
     icon: <FaChartBar size={40} />,
-    description: 'Aplikasi berbasis web untuk analisis data multi-kriteria guna membantu penentuan keputusan manajerial.',
-    descriptionEn: 'Web-based application for multi-criteria data analysis to assist in managerial decision making.',
-    fullDesc: 'Aplikasi SPK ini berfungsi sebagai alat bantu kalkulasi matematis untuk menentukan peringkat atau kelayakan suatu entitas berdasarkan banyak kriteria (Multi-Criteria Decision Making). Fungsionalitas sistem memungkinkan admin memasukkan alternatif data, mengatur bobot setiap kriteria, lalu mesin algoritma akan menghitung secara otomatis dan menyajikan rekomendasi terbaik berdasarkan skor akhir.',
-    fullDescEn: 'This DSS application serves as a mathematical calculation tool to determine the ranking or feasibility of an entity based on multiple criteria. System functionality allows admins to input alternatives, set criteria weights, and the algorithm engine automatically calculates and presents the best recommendation based on final scores.',
+    description: 'Dashboard kalkulasi untuk analisis data multi-kriteria berbasis React dan Firebase.',
+    descriptionEn: 'Calculation dashboard for multi-criteria data analysis based on React and Firebase.',
+    fullDesc: 'Aplikasi SPK (Sistem Pendukung Keputusan) ini dibangun menggunakan ekosistem React modern (Vite) yang dipadukan dengan Firebase untuk operasional backend-less. Fungsionalitas utamanya memampukan pemilik bisnis memasukkan variabel/kriteria penentuan, lalu sistem akan memproses perhitungan matematis rumit di sisi client-side untuk memberikan hasil akhir (ranking) secara instan. UI-nya dipercantik menggunakan TailwindCSS dan SweetAlert2.',
+    fullDescEn: 'This DSS (Decision Support System) application is built using a modern React ecosystem (Vite) combined with Firebase for backend-less operations. Its core functionality enables business owners to input determining variables/criteria, then the system processes complex mathematical calculations client-side to instantly provide final results (rankings). The UI is enhanced using TailwindCSS and SweetAlert2.',
     features: [
-      'Mesin Kalkulasi Algoritma: Mengubah parameter data mentah menjadi matriks perhitungan dengan metode matematis yang valid.',
-      'Manajemen Kriteria Dinamis: Admin dapat menambah, mengubah bobot, atau menghapus kriteria penilaian kapan saja.',
-      'Visualisasi Peringkat: Menampilkan hasil akhir berupa grafik dan tabel peringkat dari skor tertinggi ke terendah.'
+      'Kalkulasi Multi-Kriteria Client-side: Memproses algoritma pembobotan langsung di browser pengguna tanpa jeda waktu server.',
+      'Integrasi Firebase Berkelanjutan: Manajemen penyimpanan data terdesentralisasi namun dapat diakses kapan saja.',
+      'Notifikasi Interaktif: Umpan balik (feedback) visual instan menggunakan SweetAlert2 ketika ada perubahan data krusial.'
     ],
     featuresEn: [
-      'Algorithm Calculation Engine: Transforms raw data parameters into calculation matrices using valid mathematical methods.',
-      'Dynamic Criteria Management: Admins can add, change weights, or remove assessment criteria at any time.',
-      'Ranking Visualization: Displays final results as charts and ranking tables from highest to lowest score.'
+      'Client-side Multi-Criteria Calculation: Processes weighting algorithms directly in the user browser without server latency.',
+      'Continuous Firebase Integration: Decentralized data storage management accessible at any time.',
+      'Interactive Notifications: Instant visual feedback using SweetAlert2 when crucial data changes occur.'
     ],
-    tech: ['PHP', 'Laravel / CodeIgniter', 'MySQL', 'Bootstrap / Tailwind'],
+    tech: ['React.js', 'Vite', 'Firebase', 'TailwindCSS', 'SweetAlert2'],
     link: null,
     demo: null
   },
@@ -124,21 +124,21 @@ const manualProjects = [
     title: 'EduCounsel - Portal Konseling',
     titleEn: 'EduCounsel - Counseling Portal',
     icon: <FaUserMd size={40} />,
-    description: 'Platform layanan bimbingan dan konseling berbasis web untuk menjembatani komunikasi privat yang aman.',
-    descriptionEn: 'Web-based guidance and counseling service platform to bridge secure private communication.',
-    fullDesc: 'Proyek ini merupakan sistem informasi manajemen dan layanan e-konseling. Fungsionalitas aplikasi memfasilitasi penjadwalan sesi konsultasi antara klien dan konselor, manajemen rekam jejak sesi, serta ruang komunikasi virtual. Privasi adalah prioritas utama, sehingga sistem dilengkapi dengan lapisan enkripsi pada data riwayat konsultasi.',
-    fullDescEn: 'This project is a management information system and e-counseling service. Application functionality facilitates scheduling consultation sessions between clients and counselors, session track record management, and virtual communication rooms. Privacy is top priority, featuring encryption on consultation history data.',
+    description: 'Sistem informasi manajemen layanan e-konseling terintegrasi dengan arsitektur Role-Based Control tingkat lanjut.',
+    descriptionEn: 'Integrated e-counseling service management information system with advanced Role-Based Control architecture.',
+    fullDesc: 'Proyek ini adalah web aplikasi berskala besar yang dibangun menggunakan framework PHP Laravel. Sistem ini melayani alur layanan bimbingan psikologis/konseling dengan arsitektur keamanan tingkat tinggi (multi-middleware). Fungsionalitas aplikasi memisahkan ruang kerja secara spesifik untuk masing-masing hak akses: Publik/Mahasiswa, Operator, Konselor, Kepala, hingga Admin. Hal ini menjamin privasi absolut bagi setiap entri rekam medis konsultasi.',
+    fullDescEn: 'This project is a large-scale web application built using the PHP Laravel framework. The system serves psychological/counseling guidance workflows with high-level security architecture (multi-middleware). Application functionality specifically separates workspaces for different access rights: Public/Students, Operators, Counselors, Head, and Admins. This guarantees absolute privacy for every consultation medical record entry.',
     features: [
-      'Penjadwalan Pintar (Smart Scheduling): Sistem booking kalender otomatis yang mencegah bentrok jadwal antara konselor.',
-      'Manajemen Rekam Medis: Penyimpanan catatan sesi konsultasi yang dienkripsi dan hanya dapat diakses oleh pihak berwenang.',
-      'Notifikasi Otomatis: Pengingat sesi konsultasi via email atau notifikasi sistem untuk mengurangi tingkat ketidakhadiran.'
+      'Multi-Level Authentication: Penerapan middleware ketat untuk 5 tingkat hak akses (Public, Admin, Operator, Counselor, Kepala).',
+      'Manajemen Sesi Konseling Terjadwal: Sistem rute dinamis (dashboard/counseling routes) yang mencegah bentrokan jadwal.',
+      'Sistem Laporan Pimpinan: Modul khusus bagi jabatan manajerial (Kepala) untuk meninjau efektivitas layanan secara statistik menyeluruh.'
     ],
     featuresEn: [
-      'Smart Scheduling: Automated calendar booking system preventing schedule conflicts among counselors.',
-      'Medical Record Management: Encrypted storage of consultation session notes accessible only to authorized parties.',
-      'Automated Notifications: Consultation session reminders via email or system notifications to reduce no-show rates.'
+      'Multi-Level Authentication: Strict middleware implementation for 5 access tiers (Public, Admin, Operator, Counselor, Head).',
+      'Scheduled Counseling Session Management: Dynamic route system (dashboard/counseling routes) preventing schedule conflicts.',
+      'Executive Reporting System: Dedicated module for managerial roles (Head) to review service effectiveness via comprehensive statistics.'
     ],
-    tech: ['Web Framework', 'Database SQL', 'REST API', 'Socket/Real-time Tech'],
+    tech: ['Laravel (PHP)', 'Blade Templating', 'MySQL', 'Bootstrap / CSS', 'Composer'],
     link: null,
     demo: null
   },
@@ -147,21 +147,21 @@ const manualProjects = [
     title: 'CEMAS (Community E-Marketplace)',
     titleEn: 'CEMAS (Community E-Marketplace)',
     icon: <FaStore size={40} />,
-    description: 'Platform e-commerce komunitas lokal untuk mempertemukan penjual dan pembeli secara terpusat (Community E-Marketplace Aston Villa).',
-    descriptionEn: 'Local community e-commerce platform to centrally connect buyers and sellers (Community E-Marketplace Aston Villa).',
-    fullDesc: 'Aplikasi CEMAS (Community E-Marketplace Aston Villa) dirancang khusus sebagai ekosistem jual-beli digital untuk komunitas atau perumahan. Fungsionalitas utamanya meliputi manajemen etalase produk bagi warga, sistem keranjang belanja, proses checkout, dan pemantauan status pesanan. Sistem ini bertujuan untuk mendigitalisasi ekonomi lokal dengan antarmuka yang sangat mudah digunakan (user-friendly).',
-    fullDescEn: 'The CEMAS (Community E-Marketplace Aston Villa) application is specifically designed as a digital trading ecosystem for local communities. Its core functionality includes product storefront management for residents, a shopping cart system, checkout processes, and order status tracking. This system aims to digitalize the local economy with a highly user-friendly interface.',
+    description: 'Platform e-commerce khusus komunitas lokal untuk mempertemukan penjual dan pembeli secara terpusat.',
+    descriptionEn: 'Dedicated local community e-commerce platform to centrally connect buyers and sellers.',
+    fullDesc: 'Aplikasi CEMAS (Community E-Marketplace Aston Villa) dirancang khusus sebagai ekosistem jual-beli digital untuk warga perumahan atau komunitas internal. Fungsionalitas utamanya meliputi manajemen etalase produk bagi warga, sistem keranjang belanja, proses checkout, dan pemantauan status pesanan. Sistem ini bertujuan untuk mendigitalisasi ekonomi lokal dengan antarmuka yang sangat ramah pengguna (user-friendly).',
+    fullDescEn: 'The CEMAS (Community E-Marketplace Aston Villa) application is designed as a digital trading ecosystem for residential or internal communities. Its core functionality includes product storefront management for residents, a shopping cart system, checkout processes, and order status tracking. This system aims to digitalize the local economy with a highly user-friendly interface.',
     features: [
-      'Manajemen Etalase Warga: Fasilitas bagi anggota komunitas untuk membuka toko dan mengelola stok inventaris mereka sendiri.',
-      'Sistem Checkout Seamless: Alur transaksi dan pemesanan yang dioptimalkan agar mudah dipahami oleh pengguna dari berbagai kalangan usia.',
-      'Dashboard Pemantauan Pesanan: Panel khusus untuk melacak status transaksi dari pemesanan hingga pengiriman.'
+      'Manajemen Etalase Warga: Fasilitas mandiri bagi anggota komunitas untuk membuka toko dan mengelola stok inventaris mereka sendiri.',
+      'Sistem Checkout Seamless: Alur transaksi dan pemesanan yang dioptimalkan agar mudah dipahami oleh pengguna dari berbagai rentang usia.',
+      'Dashboard Pemantauan Pesanan: Panel manajemen pesanan untuk melacak status transaksi secara terpusat dari pemesanan hingga pengiriman.'
     ],
     featuresEn: [
-      'Resident Storefront Management: Facility for community members to open stores and manage their own inventory stock.',
-      'Seamless Checkout System: Transaction and ordering flow optimized for ease of use across all age groups.',
-      'Order Tracking Dashboard: Dedicated panel to track transaction status from ordering to delivery.'
+      'Resident Storefront Management: Self-service facility for community members to open stores and manage their own inventory stock.',
+      'Seamless Checkout System: Transaction and ordering flow optimized for easy understanding across all age ranges.',
+      'Order Tracking Dashboard: Order management panel to centrally track transaction status from order to delivery.'
     ],
-    tech: ['Web Framework', 'Database SQL', 'REST API', 'Payment/Cart System'],
+    tech: ['Web Framework', 'Database SQL', 'REST API', 'Payment Gateway'],
     link: null,
     demo: null
   }
