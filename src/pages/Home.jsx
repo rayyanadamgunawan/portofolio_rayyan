@@ -1,5 +1,5 @@
 import React, { useContext, useRef } from 'react';
-import { motion, useInView } from 'framer-motion';
+import { motion, useInView, useScroll, useTransform } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { FaCode, FaLaptopCode, FaRocket } from 'react-icons/fa';
 import { SiJavascript, SiReact, SiTailwindcss, SiNodedotjs, SiPython } from 'react-icons/si';
@@ -91,6 +91,11 @@ const Home = () => {
   const navigate = useNavigate();
   const { lang } = useContext(LangContext);
 
+  const { scrollY } = useScroll();
+  const textY = useTransform(scrollY, [0, 1000], [0, -150]);
+  const planetY = useTransform(scrollY, [0, 1000], [0, 300]);
+  const tagsY = useTransform(scrollY, [0, 1000], [0, 150]);
+
   const sectionStyle = {
     padding: '8rem 5%',
     maxWidth: '1200px',
@@ -115,7 +120,8 @@ const Home = () => {
       }}>
         
         {/* Typografi Tengah Atas */}
-        <div style={{ 
+        <motion.div style={{ 
+          y: textY,
           position: 'relative', 
           zIndex: 20, 
           display: 'flex', 
@@ -176,10 +182,11 @@ const Home = () => {
               {lang === 'id' ? 'Lihat Proyek' : 'View Projects'}
             </button>
           </motion.div>
-        </div>
+        </motion.div>
 
         {/* Planet Raksasa di Bawah */}
-        <div style={{
+        <motion.div style={{
+          y: planetY,
           position: 'absolute',
           bottom: '-60vw',
           left: '50%',
@@ -200,12 +207,14 @@ const Home = () => {
             background: 'linear-gradient(to top, rgba(127, 82, 255, 0.2), transparent)',
             filter: 'blur(20px)', pointerEvents: 'none'
           }}/>
-        </div>
+        </motion.div>
 
         {/* Floating Tags (Badge ala Moto Card) */}
-        <FloatingTag top="55%" left="15%" text="Odoo ERP" icon={<FaCode />} delay={0} />
-        <FloatingTag top="65%" right="20%" text="Laravel Systems" icon={<FaLaptopCode />} delay={1.5} />
-        <FloatingTag top="75%" left="25%" text="React / Flutter" icon={<FaRocket />} delay={0.8} />
+        <motion.div style={{ y: tagsY, position: 'absolute', width: '100%', height: '100%', pointerEvents: 'none', zIndex: 10 }}>
+          <FloatingTag top="55%" left="15%" text="Odoo ERP" icon={<FaCode />} delay={0} />
+          <FloatingTag top="65%" right="20%" text="Laravel Systems" icon={<FaLaptopCode />} delay={1.5} />
+          <FloatingTag top="75%" left="25%" text="React / Flutter" icon={<FaRocket />} delay={0.8} />
+        </motion.div>
 
       </section>
 
