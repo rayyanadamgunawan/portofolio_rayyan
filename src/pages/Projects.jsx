@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { LangContext } from '../contexts/LangContext';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FaGithub, FaExternalLinkAlt, FaRocket, FaTimes, FaBookOpen, FaUserCircle, FaBriefcase, FaChartBar, FaUserMd, FaShieldAlt } from 'react-icons/fa';
+import { FaGithub, FaExternalLinkAlt, FaRocket, FaTimes, FaBookOpen, FaUserCircle, FaBriefcase, FaChartBar, FaUserMd, FaShieldAlt, FaStore } from 'react-icons/fa';
 
 const manualProjects = [
   {
@@ -123,25 +123,25 @@ const manualProjects = [
   },
   {
     id: 6,
-    title: 'Crisis Alert System (CEMAS)',
-    titleEn: 'Crisis Alert System (CEMAS)',
-    icon: <FaShieldAlt size={40} />,
-    description: 'Aplikasi manajemen krisis dan pelaporan insiden darurat untuk penanganan respons cepat.',
-    descriptionEn: 'Crisis management and emergency incident reporting application for rapid response handling.',
-    fullDesc: 'Aplikasi ini dirancang sebagai instrumen pelaporan dan peringatan dini (early warning system). Fungsionalitas intinya memungkinkan pengguna untuk mengirimkan sinyal bahaya atau laporan insiden beserta koordinat lokasi secara instan. Sistem command center kemudian akan menerima notifikasi tersebut secara real-time untuk melakukan tindakan penanggulangan (dispatch).',
-    fullDescEn: 'This application is designed as an early warning and reporting instrument. Its core functionality allows users to instantly send distress signals or incident reports along with location coordinates. The command center system then receives these notifications in real-time to dispatch countermeasures.',
+    title: 'CEMAS (Community E-Marketplace)',
+    titleEn: 'CEMAS (Community E-Marketplace)',
+    icon: <FaStore size={40} />,
+    description: 'Platform e-commerce komunitas lokal untuk mempertemukan penjual dan pembeli secara terpusat (Community E-Marketplace Aston Villa).',
+    descriptionEn: 'Local community e-commerce platform to centrally connect buyers and sellers (Community E-Marketplace Aston Villa).',
+    fullDesc: 'Aplikasi CEMAS (Community E-Marketplace Aston Villa) dirancang khusus sebagai ekosistem jual-beli digital untuk komunitas atau perumahan. Fungsionalitas utamanya meliputi manajemen etalase produk bagi warga, sistem keranjang belanja, proses checkout, dan pemantauan status pesanan. Sistem ini bertujuan untuk mendigitalisasi ekonomi lokal dengan antarmuka yang sangat mudah digunakan (user-friendly).',
+    fullDescEn: 'The CEMAS (Community E-Marketplace Aston Villa) application is specifically designed as a digital trading ecosystem for local communities. Its core functionality includes product storefront management for residents, a shopping cart system, checkout processes, and order status tracking. This system aims to digitalize the local economy with a highly user-friendly interface.',
     features: [
-      'Laporan Insiden Berbasis Geolocation: Melampirkan titik GPS pengguna secara otomatis saat tombol darurat ditekan.',
-      'Push Notifications Real-time: Sistem notifikasi broadcast yang menembus perangkat admin dalam hitungan detik.',
-      'Dashboard Command Center: Tampilan peta interaktif bagi admin untuk melacak dan mengelola titik insiden secara visual.'
+      'Manajemen Etalase Warga: Fasilitas bagi anggota komunitas untuk membuka toko dan mengelola stok inventaris mereka sendiri.',
+      'Sistem Checkout Seamless: Alur transaksi dan pemesanan yang dioptimalkan agar mudah dipahami oleh pengguna dari berbagai kalangan usia.',
+      'Dashboard Pemantauan Pesanan: Panel khusus untuk melacak status transaksi dari pemesanan hingga pengiriman.'
     ],
     featuresEn: [
-      'Geolocation-based Incident Reports: Automatically attaches user GPS points when emergency button is pressed.',
-      'Real-time Push Notifications: Broadcast notification system that reaches admin devices in seconds.',
-      'Command Center Dashboard: Interactive map view for admins to visually track and manage incident points.'
+      'Resident Storefront Management: Facility for community members to open stores and manage their own inventory stock.',
+      'Seamless Checkout System: Transaction and ordering flow optimized for ease of use across all age groups.',
+      'Order Tracking Dashboard: Dedicated panel to track transaction status from ordering to delivery.'
     ],
-    tech: ['Mobile Architecture', 'Maps API / Geolocation', 'Firebase Cloud Messaging', 'Web Admin Panel'],
-    link: null,
+    tech: ['Web Framework', 'Database SQL', 'REST API', 'Payment/Cart System'],
+    link: 'https://github.com/rayyanadamgunawan/nelay',
     demo: null
   }
 ];
