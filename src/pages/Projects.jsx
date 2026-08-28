@@ -161,7 +161,7 @@ const manualProjects = [
       'Seamless Checkout System: Transaction and ordering flow optimized for easy understanding across all age ranges.',
       'Order Tracking Dashboard: Order management panel to centrally track transaction status from order to delivery.'
     ],
-    tech: ['Web Framework', 'Database SQL', 'REST API', 'Payment Gateway'],
+    tech: ['Laravel (PHP)', 'MySQL', 'Blade Templating', 'Payment Gateway'],
     link: null,
     demo: null
   }
@@ -233,7 +233,9 @@ const Projects = () => {
             className="project-card glass-panel hover-target"
             variants={itemVariants}
             onClick={() => setSelectedId(project.id)}
-            whileHover={{ y: -8, transition: { duration: 0.2 } }}
+            whileHover={{ y: -10, scale: 1.02, transition: { type: "spring", stiffness: 300, damping: 20 } }}
+            whileTap={{ scale: 0.95 }}
+            layout
             style={{
               padding: '2rem',
               display: 'flex',
@@ -325,6 +327,7 @@ const Projects = () => {
             }}>
               <motion.div
                 layoutId={`project-container-${selectedId}`}
+                transition={{ type: "spring", stiffness: 200, damping: 25 }}
                 className="glass-panel"
                 style={{
                   width: '90%',
@@ -382,7 +385,8 @@ const Projects = () => {
                 <motion.div 
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.2 }}
+                  exit={{ opacity: 0, y: 10, transition: { duration: 0.1 } }}
+                  transition={{ delay: 0.15 }}
                   style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}
                 >
                   <div>
