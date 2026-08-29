@@ -26,7 +26,33 @@ const About = () => {
   };
   
   return (
-    <div className="page-content">
+    <div className="page-content" style={{ position: 'relative' }}>
+      {/* Latar Belakang Planet (Saturnus) */}
+      <motion.img 
+        src="/saturn.jpg" 
+        alt="Saturnus"
+        initial={{ x: 200, opacity: 0, scale: 0.8 }}
+        animate={{ x: 0, opacity: 0.6, scale: 1, rotate: 360 }}
+        transition={{ 
+          opacity: { duration: 1, delay: 0.2 },
+          x: { duration: 1, type: "spring", delay: 0.2 },
+          scale: { duration: 1, delay: 0.2 },
+          rotate: { duration: 200, repeat: Infinity, ease: "linear" }
+        }}
+        style={{
+          position: 'absolute',
+          top: '10%',
+          right: '-20%',
+          width: '70vw',
+          maxWidth: '800px',
+          zIndex: -1,
+          mixBlendMode: 'screen',
+          filter: 'drop-shadow(0 0 50px rgba(255,200,100,0.3))',
+          willChange: 'transform, filter',
+          transform: 'translateZ(0)'
+        }}
+      />
+
       <motion.h1 
         className="section-title"
         initial={{ opacity: 0, y: 30 }}

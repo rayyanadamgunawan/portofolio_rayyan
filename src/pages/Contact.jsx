@@ -91,7 +91,33 @@ const Contact = () => {
   ];
 
   return (
-    <div className="page-content contact-page">
+    <div className="page-content contact-page" style={{ position: 'relative' }}>
+      {/* Latar Belakang Planet (Mars) */}
+      <motion.img 
+        src="https://upload.wikimedia.org/wikipedia/commons/5/58/Mars_23_aug_2003_hubble.jpg" 
+        alt="Mars"
+        initial={{ x: -200, opacity: 0, scale: 0.8 }}
+        animate={{ x: 0, opacity: 0.5, scale: 1, rotate: 360 }}
+        transition={{ 
+          opacity: { duration: 1, delay: 0.2 },
+          x: { duration: 1, type: "spring", delay: 0.2 },
+          scale: { duration: 1, delay: 0.2 },
+          rotate: { duration: 180, repeat: Infinity, ease: "linear" }
+        }}
+        style={{
+          position: 'absolute',
+          top: '30%',
+          left: '-20%',
+          width: '60vw',
+          maxWidth: '700px',
+          zIndex: -1,
+          mixBlendMode: 'screen',
+          filter: 'drop-shadow(0 0 50px rgba(255,50,0,0.3))',
+          willChange: 'transform, filter',
+          transform: 'translateZ(0)'
+        }}
+      />
+
       <motion.h1 
         className="section-title"
         initial={{ opacity: 0, y: 30 }}

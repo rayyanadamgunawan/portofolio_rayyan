@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { LangContext } from '../contexts/LangContext';
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 
 const Education = () => {
   const { lang, t } = useContext(LangContext);
@@ -39,33 +39,41 @@ const Education = () => {
       description: lang === 'id'
         ? 'Membangun karakter akademis dan sosial yang baik. Aktif dalam kegiatan sekolah dan mulai mengenal dunia teknologi.'
         : 'Built solid academic and social character. Active in school activities and started exploring the world of technology.',
-    },
-    {
-      level: lang === 'id' ? 'Sekolah Dasar' : 'Elementary School',
-      school: 'SD Negeri 249/VI Rawa Jaya',
-      major: lang === 'id' ? 'Umum' : 'General',
-      period: '2011 – 2017',
-      status: lang === 'id' ? 'Lulus' : 'Graduated',
-      icon: '🏡',
-      description: lang === 'id'
-        ? 'Tahap awal pendidikan formal dengan fondasi belajar membaca, menulis, dan berhitung yang kuat.'
-        : 'Early formal education stage with strong foundations in reading, writing, and arithmetic.',
-    },
-    {
-      level: lang === 'id' ? 'Taman Kanak-Kanak' : 'Kindergarten',
-      school: 'TK Negeri Kartika',
-      major: lang === 'id' ? 'Umum' : 'General',
-      period: '2009 – 2011',
-      status: lang === 'id' ? 'Lulus' : 'Graduated',
-      icon: '🌱',
-      description: lang === 'id'
-        ? 'Awal mula perjalanan pendidikan. Mengembangkan kemampuan sosial, kreativitas, dan rasa ingin tahu sejak dini.'
-        : 'The very beginning of the educational journey. Developing social skills, creativity, and curiosity from an early age.',
-    },
+    }
   ];
 
+  const { scrollY } = useScroll();
+  const planetY = useTransform(scrollY, [0, 1500], [0, -300]);
+
   return (
-    <div className="page-content">
+    <div className="page-content" style={{ position: 'relative' }}>
+      {/* Latar Belakang Planet (Uranus) */}
+      <motion.img 
+        src="https://upload.wikimedia.org/wikipedia/commons/3/3d/Uranus2.jpg" 
+        alt="Uranus"
+        initial={{ x: 200, opacity: 0, scale: 0.8 }}
+        animate={{ x: 0, opacity: 0.3, scale: 1, rotate: 360 }}
+        transition={{ 
+          opacity: { duration: 1, delay: 0.2 },
+          x: { duration: 1, type: "spring", delay: 0.2 },
+          scale: { duration: 1, delay: 0.2 },
+          rotate: { duration: 250, repeat: Infinity, ease: "linear" }
+        }}
+        style={{
+          position: 'absolute',
+          top: '15%',
+          right: '-20%',
+          y: planetY,
+          width: '60vw',
+          maxWidth: '700px',
+          zIndex: -1,
+          mixBlendMode: 'screen',
+          filter: 'drop-shadow(0 0 50px rgba(150,255,255,0.3))',
+          willChange: 'transform, filter',
+          transform: 'translateZ(0)'
+        }}
+      />
+
       <motion.h1 
         className="section-title"
         initial={{ opacity: 0, y: 30 }}

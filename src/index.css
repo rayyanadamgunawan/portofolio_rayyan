@@ -490,7 +490,7 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
-/* Timeline (Education) */
+/* Timeline (Education) - Cosmic Solar System Style */
 .timeline-container {
   position: relative;
   padding-left: 2rem;
@@ -501,10 +501,9 @@ h1, h2, h3, h4, h5, h6 {
   position: absolute;
   top: 0;
   left: 0;
-  width: 2px;
+  width: 0;
+  border-left: 2px dashed rgba(0, 229, 255, 0.4);
   height: 100%;
-  background: linear-gradient(to bottom, var(--accent-color), var(--accent-secondary));
-  opacity: 0.3;
 }
 
 .timeline-item {
@@ -512,17 +511,35 @@ h1, h2, h3, h4, h5, h6 {
   padding-bottom: 4rem;
 }
 
+@keyframes orbitFloat {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-5px) scale(1.1); }
+}
+
 .timeline-dot {
   position: absolute;
-  left: -2.35rem;
+  left: -2.6rem;
   top: 0;
-  width: 16px;
-  height: 16px;
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
-  background: var(--bg-main);
-  border: 2px solid var(--accent-secondary);
-  box-shadow: 0 0 15px var(--accent-secondary);
+  border: none;
+  background: radial-gradient(circle at 30% 30%, #00e5ff 0%, #0077ff 100%);
+  box-shadow: 0 0 15px #00e5ff, inset -3px -3px 6px rgba(0,0,0,0.5);
   z-index: 2;
+  animation: orbitFloat 4s ease-in-out infinite;
+}
+
+.timeline-item:nth-child(2) .timeline-dot {
+  background: radial-gradient(circle at 30% 30%, #ff0844 0%, #ffb199 100%);
+  box-shadow: 0 0 15px #ff0844, inset -3px -3px 6px rgba(0,0,0,0.5);
+  animation-delay: 1s;
+}
+
+.timeline-item:nth-child(3) .timeline-dot {
+  background: radial-gradient(circle at 30% 30%, #f6d365 0%, #fda085 100%);
+  box-shadow: 0 0 15px #fda085, inset -3px -3px 6px rgba(0,0,0,0.5);
+  animation-delay: 2s;
 }
 
 .timeline-content {

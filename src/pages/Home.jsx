@@ -114,25 +114,25 @@ const Home = () => {
             position: 'absolute', top: 0, left: '50%', x: '-50%', y: sunY,
             scale: sunScale, opacity: sunOpacity,
             width: '80vw', height: '80vw', maxWidth: '800px', maxHeight: '800px',
-            zIndex: 1
+            zIndex: 1,
+            display: 'flex', justifyContent: 'center', alignItems: 'center'
           }} 
         >
-          {/* Efek Solar Flare yang Berputar */}
-          <motion.div
-            animate={{ rotate: 360, scale: [1, 1.05, 1] }}
-            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-            style={{
-              position: 'absolute', inset: 0, borderRadius: '50%',
-              background: 'conic-gradient(from 0deg at 50% 50%, rgba(255, 150, 0, 0.2) 0deg, rgba(255, 60, 0, 0.8) 90deg, rgba(255, 200, 0, 0.2) 180deg, rgba(255, 60, 0, 0.8) 270deg, rgba(255, 150, 0, 0.2) 360deg)',
-              filter: 'blur(20px)',
-            }}
+          <motion.img
+              src="/sun-texture.jpg"
+              alt="Matahari Realistis"
+              animate={{ rotate: 360 }}
+              transition={{ duration: 300, repeat: Infinity, ease: 'linear' }}
+              style={{
+                width: '100%', height: '100%', objectFit: 'contain', borderRadius: '50%',
+                mixBlendMode: 'screen',
+                WebkitMaskImage: 'radial-gradient(circle closest-side, black 95%, transparent 100%)',
+                maskImage: 'radial-gradient(circle closest-side, black 95%, transparent 100%)',
+                filter: 'drop-shadow(0 0 100px rgba(255,100,0,0.8)) brightness(1.2)',
+                willChange: 'transform, filter',
+                transform: 'translateZ(0)'
+              }}
           />
-          {/* Inti Matahari */}
-          <div style={{
-            position: 'absolute', inset: 0, borderRadius: '50%',
-            background: 'radial-gradient(circle at 50% 50%, rgba(255, 220, 100, 1) 0%, rgba(255, 120, 0, 0.8) 20%, rgba(200, 30, 0, 0.3) 50%, transparent 70%)',
-            boxShadow: '0 -20px 150px rgba(255, 100, 0, 0.6), inset 0 20px 100px rgba(255, 200, 0, 0.8)',
-          }} />
         </motion.div>
 
         {/* Bulan (Moon) - Tengah */}
@@ -142,16 +142,21 @@ const Home = () => {
           width: '60vw', height: '60vw', maxWidth: '600px', maxHeight: '600px',
           zIndex: 2,
           display: 'flex', justifyContent: 'center', alignItems: 'center',
-          mixBlendMode: 'screen'
+          mixBlendMode: 'screen',
+          willChange: 'transform'
         }}>
-          <img 
+          <motion.img 
             src="https://upload.wikimedia.org/wikipedia/commons/d/dd/Full_Moon_Luc_Viatour.jpg" 
             alt="Moon"
+            animate={{ rotate: -360 }}
+            transition={{ duration: 400, repeat: Infinity, ease: "linear" }}
             style={{
               width: '100%', height: '100%', objectFit: 'contain',
               filter: 'contrast(1.2) brightness(0.9) drop-shadow(0 0 40px rgba(255,255,255,0.2))',
               WebkitMaskImage: 'radial-gradient(closest-side, black 96%, transparent 100%)',
-              maskImage: 'radial-gradient(closest-side, black 96%, transparent 100%)'
+              maskImage: 'radial-gradient(closest-side, black 96%, transparent 100%)',
+              willChange: 'transform, filter',
+              transform: 'translateZ(0)'
             }}
           />
         </motion.div>
@@ -162,14 +167,19 @@ const Home = () => {
           scale: earthScale, opacity: earthOpacity,
           width: '120vw', height: '120vw', maxWidth: '1000px', maxHeight: '1000px',
           zIndex: 3,
-          display: 'flex', justifyContent: 'center', alignItems: 'center'
+          display: 'flex', justifyContent: 'center', alignItems: 'center',
+          willChange: 'transform'
         }}>
-          <img 
-            src="https://upload.wikimedia.org/wikipedia/commons/2/22/Earth_Western_Hemisphere_transparent_background.png" 
+          <motion.img 
+            src="/earth.png" 
             alt="Earth"
+            animate={{ rotate: 360 }}
+            transition={{ duration: 500, repeat: Infinity, ease: "linear" }}
             style={{
-              width: '110%', height: '110%', objectFit: 'contain',
-              filter: 'drop-shadow(0 0 80px rgba(127, 82, 255, 0.8))'
+              width: '100%', height: '100%', objectFit: 'contain',
+              mixBlendMode: 'screen',
+              willChange: 'transform',
+              transform: 'translateZ(0)'
             }}
           />
         </motion.div>

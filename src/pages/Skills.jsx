@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { LangContext } from '../contexts/LangContext';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import {
   SiHtml5, SiCss, SiReact, SiTailwindcss, SiPhp, SiLaravel,
   SiNodedotjs, SiPython, SiMysql, SiKotlin, SiFirebase,
@@ -67,11 +67,42 @@ const Skills = () => {
   };
 
   const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768;
-  const ORB_SIZE = isMobile ? 80 : 120;
   const orbColumns = isMobile ? 3 : null;
 
+  const { scrollY } = useScroll();
+  const planetY = useTransform(scrollY, [0, 1500], [0, -300]);
+
+  const ORB_SIZE = isMobile ? 80 : 120;
+
   return (
-    <div className="page-content">
+    <div className="page-content" style={{ position: 'relative' }}>
+      {/* Latar Belakang Planet (Neptunus) */}
+      <motion.img 
+        src="https://upload.wikimedia.org/wikipedia/commons/5/56/Neptune_Full.jpg" 
+        alt="Neptunus"
+        initial={{ x: 200, opacity: 0, scale: 0.8 }}
+        animate={{ x: 0, opacity: 0.4, scale: 1, rotate: -360 }}
+        transition={{ 
+          opacity: { duration: 1, delay: 0.2 },
+          x: { duration: 1, type: "spring", delay: 0.2 },
+          scale: { duration: 1, delay: 0.2 },
+          rotate: { duration: 220, repeat: Infinity, ease: "linear" }
+        }}
+        style={{
+          position: 'absolute',
+          top: '40%',
+          right: '-25%',
+          y: planetY,
+          width: '70vw',
+          maxWidth: '800px',
+          zIndex: -1,
+          mixBlendMode: 'screen',
+          filter: 'drop-shadow(0 0 50px rgba(0,100,255,0.3))',
+          willChange: 'transform, filter',
+          transform: 'translateZ(0)'
+        }}
+      />
+
       <motion.h1
         className="section-title"
         initial={{ opacity: 0, y: 30 }}

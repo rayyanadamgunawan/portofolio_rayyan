@@ -42,23 +42,58 @@ const Starfield = () => {
         }} />
       ))}
 
-      {/* Asteroids (Animasi Turun) */}
+      {/* Asteroids (Animasi Turun / Shooting stars) */}
       {asteroids.map(ast => (
         <motion.div key={`ast-${ast.id}`}
           initial={{ y: '-10vh', x: `${ast.x}vw`, opacity: 0 }}
           animate={{ y: '110vh', opacity: [0, 1, 1, 0] }}
           transition={{ duration: ast.duration, delay: ast.delay, repeat: Infinity, ease: 'linear' }}
           style={{
-            position: 'absolute', 
-            width: `${ast.size}px`, 
-            height: `${ast.size}px`, 
-            background: '#888', 
-            borderRadius: '50%',
-            boxShadow: '0 0 10px rgba(255,255,255,0.4)',
+            position: 'absolute', top: 0, left: 0,
+            width: `${ast.size}px`, height: `${ast.size * 3}px`,
+            background: 'linear-gradient(to bottom, rgba(255,255,255,0.8), transparent)',
             zIndex: 0
           }}
         />
       ))}
+
+      {/* Asteroid Raksasa Mengambang Global */}
+      <motion.img
+        src="/asteroid.jpg"
+        alt="Asteroid 1"
+        animate={{ 
+          y: ["120vh", "-50vh"], 
+          rotate: [0, -180],
+          x: ["-10vw", "20vw"]
+        }}
+        transition={{ duration: 45, repeat: Infinity, ease: "linear" }}
+        style={{
+          position: 'absolute', left: '5%',
+          width: '200px', height: '200px', objectFit: 'contain',
+          zIndex: 1, opacity: 0.8, mixBlendMode: 'screen',
+          filter: 'drop-shadow(0 0 30px rgba(0,0,0,0.8)) brightness(0.6)',
+          willChange: 'transform',
+          transform: 'translateZ(0)'
+        }}
+      />
+      <motion.img
+        src="/asteroid.jpg"
+        alt="Asteroid 2"
+        animate={{ 
+          y: ["150vh", "-80vh"], 
+          rotate: [0, 360],
+          x: ["20vw", "-10vw"]
+        }}
+        transition={{ duration: 70, repeat: Infinity, ease: "linear", delay: 10 }}
+        style={{
+          position: 'absolute', right: '5%',
+          width: '350px', height: '350px', objectFit: 'contain',
+          zIndex: 1, opacity: 0.7, mixBlendMode: 'screen',
+          filter: 'drop-shadow(0 0 30px rgba(0,0,0,0.8)) brightness(0.5)',
+          willChange: 'transform',
+          transform: 'translateZ(0)'
+        }}
+      />
     </div>
   );
 };

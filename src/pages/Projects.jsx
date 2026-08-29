@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { LangContext } from '../contexts/LangContext';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import { FaGithub, FaExternalLinkAlt, FaRocket, FaTimes, FaBookOpen, FaUserCircle, FaBriefcase, FaChartBar, FaUserMd, FaStore, FaMobileAlt, FaDesktop, FaQrcode } from 'react-icons/fa';
 
 export const manualProjects = [
@@ -190,8 +190,38 @@ const Projects = () => {
     },
   };
 
+  const { scrollY } = useScroll();
+  const planetY = useTransform(scrollY, [0, 1500], [0, -300]);
+
   return (
-    <div className="page-content projects-page">
+    <div className="page-content projects-page" style={{ position: 'relative' }}>
+      {/* Latar Belakang Planet (Jupiter) */}
+      <motion.img 
+        src="https://upload.wikimedia.org/wikipedia/commons/e/e2/Jupiter.jpg" 
+        alt="Jupiter"
+        initial={{ x: -200, opacity: 0, scale: 0.8 }}
+        animate={{ x: 0, opacity: 0.5, scale: 1, rotate: 360 }}
+        transition={{ 
+          opacity: { duration: 1, delay: 0.2 },
+          x: { duration: 1, type: "spring", delay: 0.2 },
+          scale: { duration: 1, delay: 0.2 },
+          rotate: { duration: 250, repeat: Infinity, ease: "linear" }
+        }}
+        style={{
+          position: 'absolute',
+          top: '20%',
+          left: '-30%',
+          y: planetY,
+          width: '80vw',
+          maxWidth: '900px',
+          zIndex: -1,
+          mixBlendMode: 'screen',
+          filter: 'drop-shadow(0 0 50px rgba(255,100,50,0.3))',
+          willChange: 'transform, filter',
+          transform: 'translateZ(0)'
+        }}
+      />
+
       <motion.h1 
         className="section-title text-gradient-quantum"
         initial={{ opacity: 0, y: 30 }}
